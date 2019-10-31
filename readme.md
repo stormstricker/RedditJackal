@@ -4,7 +4,7 @@
 ```
 Reddit reddit = Reddit.getReddit(username, password,
                     appId, appSecret);
-Redditor user = reddit.getUser("username");
+Redditor user = reddit.getRedditor("username");
         List<Comment> comments = user.commentHistory().update(10).getComments();
 
         for (Comment comment: comments)  {
@@ -19,14 +19,14 @@ Redditor user = reddit.getUser("username");
 ```
 Reddit reddit = Reddit.getReddit(username, password,
                     appId, appSecret);
-Redditor user = reddit.getUser("username");
+Redditor user = reddit.getRedditor("username");
 List<Post> posts = user.postHistory().update(10).getPosts();
 ```
 ###### From subreddit
 ```
 Reddit reddit = Reddit.getReddit(username, password,
                     appId, appSecret);
-Subreddit subreddit = new Subreddit("learnjava");
+Subreddit subreddit = reddit.getSubreddit("learnjava");
 System.out.println(subreddit.getDescription());
 
 subreddit.postHistory().update(3);
@@ -42,6 +42,6 @@ for (Post post: posts)  {
 ```
 Reddit reddit = Reddit.getReddit(username, password,
                     appId, appSecret);
-Subreddit subreddit = new Subreddit("news");
+Subreddit subreddit = reddit.getSubreddit("news");
 subreddit.post("News title", "self", "what happened");
 ```

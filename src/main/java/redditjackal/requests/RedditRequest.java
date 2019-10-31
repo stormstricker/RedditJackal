@@ -1,7 +1,5 @@
 package redditjackal.requests;
 
-import redditjackal.tests.TestUtils;
-import redditjackal.things.Reddit;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -199,9 +197,12 @@ public class RedditRequest {
             connection.setDoOutput(true);
 
             connection.setRequestProperty("Authorization", "Bearer " + accessToken.ACCESS_TOKEN_LONG);
-            connection.setRequestMethod("POST");
 
-            connection.setFixedLengthStreamingMode(0);
+            connection.setRequestMethod("POST");
+            connection.setDoInput(true);
+
+           // connection.setFixedLengthStreamingMode(0);
+            connection.setInstanceFollowRedirects(false);
         }
 
         else if (requestType == REQUEST_TYPE.ACCESS_TOKEN)  {

@@ -5,11 +5,11 @@
 Reddit reddit = Reddit.getReddit(username, password,
                     appId, appSecret);
 Redditor user = reddit.getRedditor("username");
-        List<Comment> comments = user.commentHistory().update(10).getComments();
+List<Comment> comments = user.commentHistory().update(10).getComments();
 
-        for (Comment comment: comments)  {
-            System.out.println(comment.getBody());
-        }
+for (Comment comment: comments)  {
+    System.out.println(comment.getBody());
+}
 ```
 ###### From a post
 ```to be done```
@@ -44,4 +44,24 @@ Reddit reddit = Reddit.getReddit(username, password,
                     appId, appSecret);
 Subreddit subreddit = reddit.getSubreddit("news");
 subreddit.post("News title", "self", "what happened");
+```
+
+## Replying to posts or comments
+```
+Subreddit subreddit = reddit.getSubreddit("math");
+List<Comment> comments = subreddit.commentHistory().update(100).getComments();
+for (Comment comment: comments)  {
+    if (comment.getBody().contains("pi"))  {
+        System.out.println(comment.getBody());
+        comment.reply("Pi is 3.14159");
+    }
+}
+
+List<Post> posts  = subreddit.postHistory().update(100).getPosts();
+for (Post post: posts)  {
+    if (post.getTitle().contains("Java"))  {
+        System.out.println(post.getTitle());
+        post.reply("I know Java, need help?");
+    }
+}
 ```

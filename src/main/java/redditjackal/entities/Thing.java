@@ -1,7 +1,10 @@
 package redditjackal.entities;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import redditjackal.requests.RedditRequest;
+
+import java.net.URLEncoder;
 
 public abstract class Thing {
     public static enum THING_TYPE {COMMENT, POST};
@@ -38,11 +41,17 @@ public abstract class Thing {
         }
     }
 
-    public void reply(String text) throws Exception  {
-        String link = "https://oauth.reddit.com/api/comment?api_type=json&thing_id=" + id + "&text=" + text;
+    public Comment reply(String text) throws Exception  {
+        String link = "https://oauth.reddit.com/api/comment?api_type=json&thing_id=" + id + "&text=" + URLEncoder.encode(text, "utf-8");
         RedditRequest request = new RedditRequest(link, reddit.getAccessToken(), RedditRequest.REQUEST_TYPE.WRITE);
         String response = request.send().getResponse();
         System.out.println(response);
+
+        JSONObject jsonArray = new JSONObject(response);
+        JSONArray things = (JSONArray) ((JSONObject) ((JSONObject) jsonArray.get("json")).get("data")).get("things");
+
+        Comment result = new Comment(reddit, (JSONObject) ((JSONObject) things.get(0)).get("data"));
+        return result;
     }
 
     //setters

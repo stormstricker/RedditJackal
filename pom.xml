@@ -6,7 +6,7 @@
     <groupId>redditjackal</groupId>
     <artifactId>redditjackal</artifactId>
     <packaging>jar</packaging>
-    <version>7.0-SNAPSHOT</version>
+    <version>9.0-SNAPSHOT</version>
     <name>RedditJackal</name>
     <url>https://redditjackal.com</url>
 

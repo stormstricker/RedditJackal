@@ -201,8 +201,10 @@ public class RedditRequest {
             connection.setRequestMethod("POST");
             connection.setDoInput(true);
 
-           // connection.setFixedLengthStreamingMode(0);
-            connection.setInstanceFollowRedirects(false);
+            connection.setFixedLengthStreamingMode(0);
+           // connection.setInstanceFollowRedirects(false);
+            connection.setRequestProperty("Content-Length", "0");
+
         }
 
         else if (requestType == REQUEST_TYPE.ACCESS_TOKEN)  {

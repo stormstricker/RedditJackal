@@ -4,7 +4,6 @@ import redditjackal.requests.RedditRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -51,7 +50,11 @@ public abstract class RedditHistory {
     //oauth.reddit.com/r/subreddit/comments?limit=10 (always new comments)
     //oauth.reddit.com/r/subreddit/new?limit=10
     //oauth.reddit.com/r/subreddit/hot?limit=10
-    public LinkedList<? extends Thing> updateThings(int total, String firstId, String lastId) throws Exception  {
+    public LinkedList<? extends Thing> updateThings(int total, String firstId, String lastId) throws Exception {
+        return updateThings(total, firstId, lastId, "hot");
+    }
+
+    public LinkedList<? extends Thing> updateThings(int total, String firstId, String lastId, String thingSort) throws Exception  {
         System.out.println("type: " + type);
 
         LinkedList<Thing> result = new LinkedList<>();
@@ -70,7 +73,7 @@ public abstract class RedditHistory {
                 concreteLink+="/submitted";
             }
             else  {
-                concreteLink+="/hot";
+                concreteLink+="/" + thingSort;
             }
         }
         else  {
@@ -99,16 +102,9 @@ public abstract class RedditHistory {
                     link = concreteLink + "?limit=" +
                             100 + "&after=" + afterThing;
                 }
-                //   try {
-                URL url = new URL(link.toString());
-                //System.out.println("Start request");
-                //RedditRequest commentsRequest = new RedditRequest(url, accessToken, RedditRequest.REQUEST_TYPE.READ);
-                RedditRequest thingsRequest = new RedditRequest(link, reddit.getAccessToken(), RedditRequest.REQUEST_TYPE.READ);
-                //System.out.println("End request");
+                RedditRequest thingsRequest = new RedditRequest(link, reddit.getAccessToken(), RedditRequest.REQUEST_TYPE.GET);
 
-                //System.out.println("Start send");
                 String inputString = thingsRequest.send().getResponse();
-                //System.out.println("End send");
 
                 System.out.println(inputString);
 
@@ -147,7 +143,6 @@ public abstract class RedditHistory {
                             return result;
                     }
 
-                    //System.out.println("adding: " + thing.getBody());
                     result.add(thing);
 
                     i++;

@@ -65,3 +65,10 @@ for (Post post: posts)  {
     }
 }
 ```
+
+##How to get credentials needed to create `Reddit` object
+1. Go to https://ssl.reddit.com/prefs/apps/
+2. Click Create App
+3. Select type script, fell the fields
+4. User your username + password + appId + appSecret to create `Reddit`
+

@@ -7,14 +7,13 @@ import redditjackal.requests.RedditRequest;
 
 import org.json.JSONObject;
 
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 //import org.apache.commons.codec.binary.Base64;
 
 
 public class Reddit {
-    public AccessToken accessToken;
+    private AccessToken accessToken;
 
     private static Reddit reddit;
 
@@ -58,6 +57,8 @@ public class Reddit {
         return new Redditor(this, username);
     }
 
+    public BotOwner getMe()  {return new BotOwner(this, accessToken.getUsername());}
+
     //SIMPLE GETTERS: START
     public ArrayList<Redditor> getRedditors()  {
         return users;
@@ -70,13 +71,12 @@ public class Reddit {
     //SIMPLE GETTERS: END
 
 
-    //WRITE METHODS
+    //POST METHODS
     public  void postComment(String thing_id, String commentBody) throws Exception  {
-        String bodyParameters = "api_type=json&thing_id=" + thing_id + "&text=" + commentBody;
-        byte[] bodyData = bodyParameters.getBytes(StandardCharsets.UTF_8 );
+        String params = "api_type=json&thing_id=" + thing_id + "&text=" + commentBody;
 
         RedditRequest postCommentRequest = new RedditRequest(new java.net.URL(Link.POST_COMMENT), accessToken,
-                        RedditRequest.REQUEST_TYPE.WRITE, bodyData);
+                        RedditRequest.REQUEST_TYPE.POST, params);
         String inputString = postCommentRequest.send().getResponse();
         JSONObject jsonObject = new JSONObject(inputString);
         System.out.println(inputString);

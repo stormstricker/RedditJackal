@@ -6,30 +6,39 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.zip.GZIPInputStream;
 
 public class RedditRequest {
     public static long count=0;
 
-    public static enum REQUEST_TYPE {READ, WRITE, ACCESS_TOKEN};
+    public enum REQUEST_TYPE {GET, POST, ACCESS_TOKEN};
         private HttpURLConnection connection;
 
         private URL url;
         private REQUEST_TYPE requestType;
 
         private AccessToken accessToken;  //if there has already been retrieved an access_token
-        private String encodedAppPair;  //if it's a REQUEST_TYPE.ACCESS_TOKEN request
+        private String encodedAppPair = "";  //if it's a REQUEST_TYPE.ACCESS_TOKEN request
 
+        protected String link = "";
+        protected String params = "";
 
-        private String link;
+        protected void updateLink()  {
+            if (!params.equalsIgnoreCase(""))  {
+                params = "?" + params.substring(1);
+            }
 
-
-    private byte[] bodyData;
+            link+= params;
+        }
 
     {
         count++;
@@ -40,50 +49,43 @@ public class RedditRequest {
 
     }
 
+    protected RedditRequest()  {}
+
     public RedditRequest(URL url, String encodedAppPair, REQUEST_TYPE requestType)  throws Exception {
                 this.url = url;
                 this.encodedAppPair = encodedAppPair;
                 this.requestType = requestType;
-
-                connection = (HttpURLConnection)  url.openConnection();
-                setup();
         }
 
     public RedditRequest(String link, AccessToken accessToken, REQUEST_TYPE requestType)  throws Exception {
-        this.link = link;
+        setLink(link);
         this.accessToken = accessToken;
         this.requestType = requestType;
 
-        this.url = new URL(link);
-        connection = (HttpURLConnection)  url.openConnection();
-        setup();
     }
 
-        public RedditRequest(URL url, AccessToken accessToken, REQUEST_TYPE requestType) throws Exception  {
+        public RedditRequest(URL url, AccessToken accessToken, REQUEST_TYPE requestType, String params) throws Exception {
             this.url = url;
             this.accessToken = accessToken;
             this.requestType = requestType;
 
-            connection = (HttpURLConnection) url.openConnection();
-            setup();
-        }
-
-        public RedditRequest(URL url, AccessToken accessToken, REQUEST_TYPE requestType, byte[] bodyData) throws Exception {
-            this.url = url;
-            this.accessToken = accessToken;
-            this.requestType = requestType;
-
-            this.bodyData = bodyData;
-
-            connection = (HttpURLConnection) url.openConnection();
-            setup();
-
-
+            this.params = params;
         }
 
         public RedditResponse send() throws Exception  {
                 //System.out.println(accessToken.ACCESS_TOKEN_LONG);
+                if (link!=null && !link.equalsIgnoreCase("")) {
+                    try {
+                        this.url = new URL(link);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
+                connection = (HttpURLConnection)  url.openConnection();
+                setup();
+
+                System.out.println("Connecting to " + connection.getURL());
                 connection.connect();
                 //System.out.println("start get input stream");
 
@@ -185,7 +187,7 @@ public class RedditRequest {
 
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-        if (requestType==REQUEST_TYPE.READ)  {
+        if (requestType==REQUEST_TYPE.GET)  {
             connection.setRequestProperty("Authorization", "Bearer " + accessToken.ACCESS_TOKEN_LONG);
             connection.setRequestMethod("GET");
 
@@ -193,28 +195,32 @@ public class RedditRequest {
             connection.setInstanceFollowRedirects(false);
         }
 
-        else if (requestType==REQUEST_TYPE.WRITE)  {
-            connection.setDoOutput(true);
-
+        else if (requestType==REQUEST_TYPE.POST)  {
             connection.setRequestProperty("Authorization", "Bearer " + accessToken.ACCESS_TOKEN_LONG);
-
             connection.setRequestMethod("POST");
+            connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
+            connection.setRequestProperty( "charset", "utf-8");
+
+            connection.setDoOutput(true);
+            connection.setInstanceFollowRedirects(false);  //?
+            connection.setUseCaches( false );
             connection.setDoInput(true);
 
-            connection.setFixedLengthStreamingMode(0);
-           // connection.setInstanceFollowRedirects(false);
-            connection.setRequestProperty("Content-Length", "0");
-
+            byte[] postData = URLEncoder.encode(params, "UTF-8").getBytes( StandardCharsets.UTF_8 );
+            int postDataLength = postData.length;
+            connection.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+            OutputStream os = connection.getOutputStream();
+            os.write(postData);
+            os.close();
         }
 
         else if (requestType == REQUEST_TYPE.ACCESS_TOKEN)  {
-            connection.setDoOutput(true);
-
-            connection.setRequestMethod("POST");
-            connection.setDoInput(true);
             connection.setRequestProperty("Authorization", "Basic " + encodedAppPair);
-
+            connection.setRequestMethod("POST");
             connection.setFixedLengthStreamingMode(0);
+
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
         }
 
     //    if (this.bodyData!=null)  {
@@ -223,5 +229,22 @@ public class RedditRequest {
           //  os.write(bodyData);
           //  os.close();
        // }
+    }
+
+    public Object execute()  {
+        return null;
+    }
+
+    //absolutely necessary setters
+    protected void setRequestType(REQUEST_TYPE requestType) {
+        this.requestType = requestType;
+    }
+
+    protected void setAccessToken(AccessToken accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    protected void setLink(String link) {
+        this.link = link;
     }
 }

@@ -1,0 +1,1 @@
+xcopy "C:\Program Files\Apache Software Foundation\Tomcat 8.5\webapps\RedditJackal\target\redditjackal-1.0-SNAPSHOT\WEB-INF" "C:\Program Files\Apache Software Foundation\Tomcat 8.5\webapps\RedditJackal\WEB-INF\" /E /Y

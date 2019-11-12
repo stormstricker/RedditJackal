@@ -68,6 +68,39 @@ public class AccessToken {
                 }
         }
 
+        //getters
+        public String getUsername() {
+                return username;
+        }
+
+        public String getPassword() {
+                return password;
+        }
+
+        public String getAppId() {
+                return appId;
+        }
+
+        public String getAppSecret() {
+                return appSecret;
+        }
+
+        public String getEncodedAppPair() {
+                return encodedAppPair;
+        }
+
+        public String getACCESS_TOKEN_LONG() {
+                return ACCESS_TOKEN_LONG;
+        }
+
+        public String getACCESS_TOKEN_SHORT() {
+                return ACCESS_TOKEN_SHORT;
+        }
+
+        public TOKEN_TYPE getTokenType() {
+                return tokenType;
+        }
+
         //setters
         public void setUsername(String username)  {
                 this.username = username;

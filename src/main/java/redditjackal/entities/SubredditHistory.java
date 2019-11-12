@@ -4,11 +4,12 @@ import java.util.*;
 
 public class SubredditHistory extends RedditHistory {
         private CommentHistory commentHistory;
-        private PostHistory postHistory;
+        private PostHistory hotPosts;
+        private PostHistory newPosts;
 
         public CommentHistory getCommentHistory()  {return commentHistory;}
 
-        public PostHistory getPostHistory()  {return postHistory;}
+        public PostHistory getHotPosts()  {return hotPosts;}
 
         private HashMap<String, Subreddit> subreddits;
         //constructor
@@ -18,7 +19,8 @@ public class SubredditHistory extends RedditHistory {
 
         public void clear()  {
             commentHistory=null;
-            postHistory=null;
+            hotPosts =null;
+            newPosts = null;
             subreddits=null;
         }
 
@@ -37,7 +39,7 @@ public class SubredditHistory extends RedditHistory {
                 subreddits = new HashMap<>();
             }
 
-            this.postHistory = postHistory;
+            this.hotPosts = postHistory;
 
             HashSet<String> subredditSet = new HashSet<>();
 
@@ -54,6 +56,7 @@ public class SubredditHistory extends RedditHistory {
 
             return true;
         }
+
 
 
         public boolean update(CommentHistory commentHistory) throws NotLoggedInException  {
@@ -114,9 +117,9 @@ public class SubredditHistory extends RedditHistory {
 
                 //System.out.println("freq_after_comm: " + frequencies);
 
-                if (postHistory!=null)  {
+                if (hotPosts !=null)  {
                     for (Subreddit subreddit: subreddits.values())  {
-                        Long posts = postHistory.getFrequencies().get(subreddit.getName());
+                        Long posts = hotPosts.getFrequencies().get(subreddit.getName());
 
                        // System.out.println("posts in " + subreddit.getName() + ": " + posts);
 
@@ -133,7 +136,7 @@ public class SubredditHistory extends RedditHistory {
                 //System.out.println("freq_after_posts: " + frequencies);
 
                 //System.out.println("commentFreq: " + commentHistory.getFrequencies());
-                //System.out.println("postFreq: " + postHistory.getFrequencies());
+                //System.out.println("postFreq: " + hotPosts.getFrequencies());
 
                 frequencies = Util.sortHashMap(frequencies, "desc");
 
@@ -142,10 +145,14 @@ public class SubredditHistory extends RedditHistory {
                 return frequencies;
         }
 
+
+
         //getters
         public HashMap<String, Subreddit> getSubreddits()  {
             return subreddits;
         }
 
-
+        public PostHistory getNewPosts() {
+            return newPosts;
+        }
 }

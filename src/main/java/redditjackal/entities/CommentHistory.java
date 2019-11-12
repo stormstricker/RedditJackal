@@ -45,7 +45,7 @@ public class CommentHistory extends RedditHistory {
                 lastId = thingId;
 
                 RedditRequest redditRequest = new RedditRequest(" https://oauth.reddit.com/api/info?id=" + thingId,
-                        Reddit.getReddit().getAccessToken(), RedditRequest.REQUEST_TYPE.READ);
+                        Reddit.getReddit().getAccessToken(), RedditRequest.REQUEST_TYPE.GET);
                 String inputString = redditRequest.send().getResponse();
                 JSONObject jsonArray = new JSONObject(inputString);
 

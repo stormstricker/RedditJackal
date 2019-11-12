@@ -8,7 +8,7 @@ public class PostHistory extends RedditHistory  {
     private LinkedList<Post> posts;
 
     //constructor
-    public PostHistory(Actor actor)  {
+     PostHistory(Actor actor)  {
         super(actor, "posts");
 
         posts = new LinkedList<>();
@@ -72,6 +72,18 @@ public class PostHistory extends RedditHistory  {
         else if (posts.size()!=0)  {
             updateTo(posts.get(0).getId());
         }
+
+        calculateFrequencies();
+
+        if (actor instanceof Redditor) {
+            ((Redditor) actor).subredditHistory().update(this);
+        }
+
+        return this;
+    }
+
+    public PostHistory updateNew(int total) throws Exception  {
+        posts = (LinkedList<Post>) updateThings(total, "", "", "new");
 
         calculateFrequencies();
 

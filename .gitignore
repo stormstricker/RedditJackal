@@ -1,0 +1,13 @@
+*.token
+tokens
+*.class
+target
+*.iml
+.idea
+other
+test
+tests
+webapp
+credentials
+*.credentials
+WEB-INF

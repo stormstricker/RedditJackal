@@ -25,7 +25,7 @@ public class Subreddit extends Actor {
     public void post(String title, String kind, String text) throws Exception  {
         String url = "https://oauth.reddit.com/api/submit?sr=" + name + "&title=" + title + "&kind=self&text=" + text;
 
-        RedditRequest request = new RedditRequest(url, Reddit.getReddit().getAccessToken(), RedditRequest.REQUEST_TYPE.WRITE);
+        RedditRequest request = new RedditRequest(url, Reddit.getReddit().getAccessToken(), RedditRequest.REQUEST_TYPE.POST);
         String inputString = request.send().getResponse();
         System.out.println(inputString);
     }
@@ -36,7 +36,7 @@ public class Subreddit extends Actor {
         if (description == null)  {
             try {
                 RedditRequest request = new RedditRequest(" https://oauth.reddit.com/r/" + name + "/about",
-                        Reddit.getReddit().getAccessToken(), RedditRequest.REQUEST_TYPE.READ);
+                        Reddit.getReddit().getAccessToken(), RedditRequest.REQUEST_TYPE.GET);
                 String inputString = request.send().getResponse();
                 JSONObject jsonObject = new JSONObject(inputString);
                 JSONObject data = (JSONObject) jsonObject.get("data");

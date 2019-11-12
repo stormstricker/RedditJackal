@@ -1,7 +1,7 @@
 package redditjackal.entities;
 
 import org.json.JSONObject;
-import redditjackal.requests.RedditRequest;
+import redditjackal.exceptions.NotLoggedInException;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class Post extends Thing {
     }
     public String getThumbnail()  {return thumbnail;}
 
-    Post(Reddit reddit, JSONObject thingData) throws NotLoggedInException  {
+    Post(Reddit reddit, JSONObject thingData) throws NotLoggedInException {
         super(reddit, thingData);
         setBody((String) thingData.get("selftext"));
         setTitle((String) thingData.get("title"));

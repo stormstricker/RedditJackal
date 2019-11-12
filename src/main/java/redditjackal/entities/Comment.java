@@ -1,7 +1,7 @@
 package redditjackal.entities;
 
 import org.json.JSONObject;
-import redditjackal.requests.RedditRequest;
+import redditjackal.exceptions.NotLoggedInException;
 
 public class Comment extends Thing {
         private String link;

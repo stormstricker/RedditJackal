@@ -1,5 +1,7 @@
 package redditjackal.entities;
 
+import redditjackal.exceptions.NotLoggedInException;
+
 import java.util.*;
 
 public class SubredditHistory extends RedditHistory {

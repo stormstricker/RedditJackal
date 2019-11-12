@@ -1,5 +1,6 @@
 package redditjackal.entities;
 
+import redditjackal.exceptions.ThingNotFoundException;
 import redditjackal.requests.RedditRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,7 +46,7 @@ public class CommentHistory extends RedditHistory {
                 lastId = thingId;
 
                 RedditRequest redditRequest = new RedditRequest(" https://oauth.reddit.com/api/info?id=" + thingId,
-                        Reddit.getReddit().getAccessToken(), RedditRequest.REQUEST_TYPE.GET);
+                        reddit.getAccessToken(), RedditRequest.REQUEST_TYPE.GET);
                 String inputString = redditRequest.send().getResponse();
                 JSONObject jsonArray = new JSONObject(inputString);
 

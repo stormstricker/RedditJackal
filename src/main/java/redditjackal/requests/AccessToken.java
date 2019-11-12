@@ -3,6 +3,7 @@ package redditjackal.requests;
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
+import redditjackal.exceptions.WrongCredentialsException;
 
 import java.net.URL;
 
@@ -32,7 +33,7 @@ public class AccessToken {
                 this.tokenType = TOKEN_TYPE.LONG;
         }
 
-        public boolean renew()  {
+        public boolean renew() throws WrongCredentialsException  {
                 String grantTypeValue;
 
                 if (tokenType== AccessToken.TOKEN_TYPE.SHORT)  {
@@ -63,8 +64,7 @@ public class AccessToken {
                 }
                 catch (Exception e)  {
                         System.out.println(e);
-
-                        return false;
+                        throw new WrongCredentialsException();
                 }
         }
 

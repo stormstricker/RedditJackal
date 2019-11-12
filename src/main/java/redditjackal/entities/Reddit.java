@@ -1,5 +1,6 @@
 package redditjackal.entities;
 
+import redditjackal.exceptions.WrongCredentialsException;
 import redditjackal.requests.AccessToken;
 import redditjackal.requests.Link;
 import redditjackal.requests.RedditRequest;
@@ -15,29 +16,10 @@ import java.util.*;
 public class Reddit {
     private AccessToken accessToken;
 
-    private static Reddit reddit;
-
-    public static Reddit getReddit(String username, String password, String appId, String appSecret)  {
-        if (reddit == null)  {
-            reddit = new Reddit(username, password, appId, appSecret);
-        }
-
-        return reddit;
-    }
-
-    public static Reddit getReddit() throws NotLoggedInException  {
-        if (reddit == null)  {
-                throw new NotLoggedInException();
-        }
-        return reddit;
-    }
-
-    private Reddit(String username, String password, String appId, String appSecret)  {
+    public Reddit(String username, String password, String appId, String appSecret) throws WrongCredentialsException  {
         accessToken = new AccessToken(username, password, appId, appSecret);
         accessToken.renew();
-       // accessToken.renew();
-
-        users = new ArrayList<Redditor>();
+        users = new ArrayList<>();
         activeSubreddits = new HashMap<>();
     }
 
@@ -78,12 +60,8 @@ public class Reddit {
         RedditRequest postCommentRequest = new RedditRequest(new java.net.URL(Link.POST_COMMENT), accessToken,
                         RedditRequest.REQUEST_TYPE.POST, params);
         String inputString = postCommentRequest.send().getResponse();
-        JSONObject jsonObject = new JSONObject(inputString);
         System.out.println(inputString);
-
     }
-
-
 }
 
 

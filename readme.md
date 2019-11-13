@@ -108,6 +108,6 @@ System.out.println("unread size: " + unread.size());  //0
 ## How to get credentials needed to create `Reddit` object
 1. Go to https://ssl.reddit.com/prefs/apps/
 2. Click Create App
-3. Select type script, fell the fields
-4. User your username + password + appId + appSecret to create `Reddit`
+3. Select script, fill the name and description. User https://reddit.com for URL fields
+4. Use your username + password + appId + appSecret to create `Reddit`
 

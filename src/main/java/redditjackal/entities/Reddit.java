@@ -32,6 +32,7 @@ public class Reddit {
 
     }
 
+
     //API
     public Subreddit getSubreddit(String name)  {return new Subreddit(this, name);}
 

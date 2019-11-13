@@ -22,15 +22,15 @@ Reddit reddit = new Reddit(username, password,
 Redditor user = reddit.getRedditor("username");
 List<Post> posts = user.postHistory().update(10).getPosts();
 ```
-###### From subreddit
+###### From aboutRedditorSubredditJson
 ```
 Reddit reddit = new Reddit(username, password,
                     appId, appSecret);
-Subreddit subreddit = reddit.getSubreddit("learnjava");
-System.out.println(subreddit.getDescription());
+Subreddit aboutRedditorSubredditJson = reddit.getSubreddit("learnjava");
+System.out.println(aboutRedditorSubredditJson.getDescription());
 
-subreddit.postHistory().update(3);
-List<Post> posts  = subreddit.postHistory().getPosts();
+aboutRedditorSubredditJson.postHistory().update(3);
+List<Post> posts  = aboutRedditorSubredditJson.postHistory().getPosts();
 
 for (Post post: posts)  {
     System.out.println(post.getTitle());
@@ -38,18 +38,18 @@ for (Post post: posts)  {
 }
 ```
 
-## Create a post in a subreddit
+## Create a post in a aboutRedditorSubredditJson
 ```
 Reddit reddit = new Reddit(username, password,
                     appId, appSecret);
-Subreddit subreddit = reddit.getSubreddit("news");
-subreddit.post("News title", "self", "what happened");
+Subreddit aboutRedditorSubredditJson = reddit.getSubreddit("news");
+aboutRedditorSubredditJson.post("News title", "self", "what happened");
 ```
 
 ## Replying to posts or comments
 ```
-Subreddit subreddit = reddit.getSubreddit("math");
-List<Comment> comments = subreddit.commentHistory().update(100).getComments();
+Subreddit aboutRedditorSubredditJson = reddit.getSubreddit("math");
+List<Comment> comments = aboutRedditorSubredditJson.commentHistory().update(100).getComments();
 for (Comment comment: comments)  {
     if (comment.getBody().contains("pi"))  {
         System.out.println(comment.getBody());
@@ -57,7 +57,7 @@ for (Comment comment: comments)  {
     }
 }
 
-List<Post> posts  = subreddit.postHistory().update(100).getPosts();
+List<Post> posts  = aboutRedditorSubredditJson.postHistory().update(100).getPosts();
 for (Post post: posts)  {
     if (post.getTitle().contains("Java"))  {
         System.out.println(post.getTitle());
@@ -103,6 +103,15 @@ for (InboxMessage message: unread)  {
 
 unread = admin.getUnreadInboxMessages();
 System.out.println("unread size: " + unread.size());  //0
+```
+
+## Get information about a user
+```
+Redditor redditor = reddit.getRedditor("username");
+System.out.println(redditor.getIsEmployee());
+System.out.println(redditor.getHasVerifiedEmail());
+System.out.println(redditor.getLinkKarma());
+System.out.println(redditor.getCommentKarma());
 ```
 
 ## How to get credentials needed to create `Reddit` object

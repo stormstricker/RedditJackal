@@ -5,9 +5,9 @@ import com.google.gson.reflect.TypeToken;
 import redditjackal.jsonhandlers.inbox.InboxResultJson;
 import redditjackal.requests.AccessToken;
 import redditjackal.requests.RedditResponse;
-import redditjackal.requests.inbox.AbstractInboxRequest;
+import redditjackal.requests.AbstractRequest;
 
-public abstract class AbstractGetInboxRequest extends AbstractInboxRequest {
+public abstract class AbstractGetInboxRequest extends AbstractRequest {
     protected boolean mark;
     private String after;
     private String before;
@@ -28,7 +28,7 @@ public abstract class AbstractGetInboxRequest extends AbstractInboxRequest {
         return null;
     }
 
-    public abstract class Builder<T extends Builder> extends AbstractInboxRequest.Builder<Builder>  {
+    public abstract class Builder<T extends Builder> extends AbstractRequest.Builder<Builder>  {
         protected Builder(String type, AccessToken token)  {
             super(type, token);
         }
@@ -82,9 +82,7 @@ public abstract class AbstractGetInboxRequest extends AbstractInboxRequest {
         }
     }
 
-
     //auto-gen
-
     @Override
     public InboxResultJson execute()  {
         try  {

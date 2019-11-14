@@ -24,4 +24,8 @@ public class Comment extends Thing {
                 super(reddit, thingData);
                 setBody((String) thingData.get("body"));
         }
+
+        public void sendPrivateMessage()  {
+
+        }
 }

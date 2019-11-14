@@ -1,8 +1,10 @@
 package redditjackal.entities;
 
+import redditjackal.exceptions.RedditorNotFoundException;
 import redditjackal.jsonhandlers.redditor.AboutRedditorDataJson;
 import redditjackal.jsonhandlers.redditor.AboutRedditorJson;
 import redditjackal.jsonhandlers.redditor.AboutRedditorSubredditJson;
+import redditjackal.requests.inbox.interfaces.Mailable;
 import redditjackal.requests.redditor.AboutRedditorRequest;
 
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.HashMap;
 
 //TODO: check if user is deleted
 
-public class Redditor extends Actor {
+public class Redditor extends Actor implements Mailable {
     AboutRedditorJson aboutJson;
 
     CommentHistory commentHistory;
@@ -28,6 +30,16 @@ public class Redditor extends Actor {
 
     private ArrayList<String> interests;
     private ArrayList<String> favSubreddits;
+
+    @Override
+    public void sendPrivateMessage(String subject, String text)  {
+        reddit.getMe().sendPrivateMessage(subject, text, username);
+    }
+
+    @Override
+    public void sendPrivateMessage(String subject, String text, String fr_sr)  {
+        reddit.getMe().sendPrivateMessage(subject, text, username, fr_sr);
+    }
 
     //autogen delegates
     public AboutRedditorDataJson getAboutRedditorDataJson() {
@@ -161,7 +173,7 @@ public class Redditor extends Actor {
 
 
     //constructors
-     Redditor(Reddit reddit, String username) {
+     Redditor(Reddit reddit, String username) throws RedditorNotFoundException  {
         this.reddit = reddit;
 
          AboutRedditorRequest.Builder builder = AboutRedditorRequest.builder(username, reddit.getAccessToken());

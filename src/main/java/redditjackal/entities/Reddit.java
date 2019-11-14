@@ -1,5 +1,6 @@
 package redditjackal.entities;
 
+import redditjackal.exceptions.RedditorNotFoundException;
 import redditjackal.exceptions.WrongCredentialsException;
 import redditjackal.requests.AccessToken;
 import redditjackal.requests.Link;
@@ -15,12 +16,27 @@ import java.util.*;
 
 public class Reddit {
     private AccessToken accessToken;
+    private BotOwner admin;
+
+    private static Map<String, Redditor> cashedRedditors = new HashMap<>();
+    public static Map<String, Redditor> getCashedRedditors() {
+        return cashedRedditors;
+    }
+
+    public static Map<String, Subreddit> cachedSubreddits = new HashMap<>();
+    public static Map<String, Subreddit> getCachedSubreddits()  {return cachedSubreddits;}
 
     public Reddit(String username, String password, String appId, String appSecret) throws WrongCredentialsException  {
         accessToken = new AccessToken(username, password, appId, appSecret);
         accessToken.renew();
         users = new ArrayList<>();
         activeSubreddits = new HashMap<>();
+        try  {
+            admin = new BotOwner(this, accessToken.getUsername());
+        }
+        catch (RedditorNotFoundException e)  {
+            throw new WrongCredentialsException();
+        }
     }
 
     public AccessToken getAccessToken()  {return accessToken;}
@@ -34,13 +50,29 @@ public class Reddit {
 
 
     //API
-    public Subreddit getSubreddit(String name)  {return new Subreddit(this, name);}
-
-    public Redditor getRedditor(String username)  {
-        return new Redditor(this, username);
+    public Subreddit getSubreddit(String name)  {
+        if (cachedSubreddits.containsKey(name))  {
+            return cachedSubreddits.get(name);
+        }
+        else  {
+            Subreddit result = new Subreddit(this, name);
+            cachedSubreddits.put(name, result);
+            return result;
+        }
     }
 
-    public BotOwner getMe()  {return new BotOwner(this, accessToken.getUsername());}
+    public Redditor getRedditor(String username) throws RedditorNotFoundException {
+        if (cashedRedditors.containsKey(username))  {
+            return cashedRedditors.get(username);
+        }
+        else  {
+            Redditor result = new Redditor(this, username);
+            cashedRedditors.put(username, result);
+            return result;
+        }
+    }
+
+    public BotOwner getMe() {return admin;}
 
     //SIMPLE GETTERS: START
     public ArrayList<Redditor> getRedditors()  {

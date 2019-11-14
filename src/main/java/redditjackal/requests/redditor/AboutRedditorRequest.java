@@ -3,6 +3,7 @@ package redditjackal.requests.redditor;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import redditjackal.entities.Reddit;
+import redditjackal.exceptions.RedditorNotFoundException;
 import redditjackal.jsonhandlers.inbox.InboxResultJson;
 import redditjackal.jsonhandlers.redditor.AboutRedditorJson;
 import redditjackal.requests.AbstractRequest;
@@ -44,9 +45,14 @@ public class AboutRedditorRequest extends AbstractRequest  {
     }
 
     @Override
-    public AboutRedditorJson execute()  {
+    public AboutRedditorJson execute() throws RedditorNotFoundException {
         try  {
             RedditResponse response = send();
+
+            if (response.getStatus()==404)  {
+                throw new RedditorNotFoundException();
+            }
+
             Gson gson = new Gson();
             return gson.fromJson(response.getResponse(), new TypeToken<AboutRedditorJson>(){}.getType());
         }

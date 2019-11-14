@@ -2,10 +2,12 @@ package redditjackal.requests;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 
+import javax.xml.crypto.dsig.spec.ExcC14NParameterSpec;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -91,12 +93,16 @@ public class RedditRequest {
 
                  InputStream input;
 
+            System.out.println("response code: " + connection.getResponseCode());
                  try {
                      if ("gzip".equals(connection.getContentEncoding())) {
                          input = new GZIPInputStream(connection.getInputStream());
 
-                     } else {
+                     } else if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
                          input = connection.getInputStream();
+                     }
+                     else  {
+                         input = connection.getErrorStream();
                      }
 
                      //System.out.println("timeout: " + connection.getConnectTimeout());
@@ -231,7 +237,7 @@ public class RedditRequest {
        // }
     }
 
-    public Object execute()  {
+    public Object execute() throws Exception {
         return null;
     }
 

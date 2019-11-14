@@ -2,8 +2,9 @@ package redditjackal.entities;
 
 import redditjackal.requests.RedditRequest;
 import org.json.JSONObject;
+import redditjackal.requests.inbox.interfaces.Mailable;
 
-public class Subreddit extends Actor {
+public class Subreddit extends Actor implements Mailable {
     private CommentHistory commentHistory;
     private PostHistory postHistory;
 
@@ -17,6 +18,7 @@ public class Subreddit extends Actor {
 
         this.commentHistory = new CommentHistory(this);
         this.postHistory = new PostHistory(this);
+        this.description = getDescription();
     }
 
     public CommentHistory commentHistory()  {return commentHistory;}
@@ -30,6 +32,16 @@ public class Subreddit extends Actor {
         System.out.println(inputString);
     }
 
+
+    @Override
+    public void sendPrivateMessage(String subject, String text)  {
+        reddit.getMe().sendPrivateMessage(subject, text, "/r/" + name);
+    }
+
+    @Override
+    public void sendPrivateMessage(String subject, String text, String fr_sr)  {
+        reddit.getMe().sendPrivateMessage(subject, text, name, fr_sr);
+    }
 
     //getters
     public String getDescription() {

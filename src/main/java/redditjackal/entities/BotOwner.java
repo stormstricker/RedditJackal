@@ -1,6 +1,7 @@
 package redditjackal.entities;
 
 import redditjackal.entities.inbox.InboxMessage;
+import redditjackal.exceptions.RedditorNotFoundException;
 import redditjackal.jsonhandlers.inbox.InboxChildJson;
 import redditjackal.jsonhandlers.inbox.InboxResultJson;
 import redditjackal.requests.inbox.get.InboxRequest;
@@ -11,8 +12,10 @@ import redditjackal.requests.inbox.post.ReadMessageRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: fr_sr metods don't work: the name of the sender (subreddit's mod) is still visible
+
 public class BotOwner extends Redditor  {
-     BotOwner(Reddit reddit, String username)  {
+     BotOwner(Reddit reddit, String username) throws RedditorNotFoundException {
         super(reddit, username);
     }
 
@@ -24,7 +27,7 @@ public class BotOwner extends Redditor  {
 
     public void sendPrivateMessage(String subject, String text, String to)  {
         ComposeMessageRequest.Builder messageRequest =
-                ComposeMessageRequest.builder(subject, text, to, reddit.getAccessToken());
+                 ComposeMessageRequest.builder(subject, text, to, reddit.getAccessToken());
         messageRequest.build().execute();
     }
 
@@ -32,6 +35,22 @@ public class BotOwner extends Redditor  {
         ComposeMessageRequest.Builder messageRequest =
                 ComposeMessageRequest.builder(subject, text, to, reddit.getAccessToken()).setFromSr(from_sr);
         messageRequest.build().execute();
+    }
+
+    public void sendPrivateMessage(String subject, String text, Redditor to)  {
+        sendPrivateMessage(subject, text, to.getName());
+    }
+
+    public void sendPrivateMessage(String subject, String text, Redditor to, String fr_sr)  {
+         sendPrivateMessage(subject, text, to.getName(), fr_sr);
+    }
+
+    public void sendPrivateMessage(String subject, String text, Subreddit subreddit, String fr_sr)  {
+        sendPrivateMessage(subject, text, "/r/" + subreddit.getName(), fr_sr);
+    }
+
+    public void sendPrivateMessage(String subject, String text, Subreddit subreddit)  {
+        sendPrivateMessage(subject, text, "/r/" + subreddit.getName());
     }
 
     public List<InboxMessage> getInboxMessages(int limit) throws Exception  {

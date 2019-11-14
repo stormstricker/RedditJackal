@@ -51,7 +51,7 @@ public class SubredditHistory extends RedditHistory {
 
             for (String subredditName: subredditSet)  {
                 Subreddit subreddit = reddit.getSubreddit(subredditName);
-                subreddit.getDescription();
+                //subreddit.getDescription();
 
                 subreddits.put(subredditName, subreddit);
             }
@@ -79,7 +79,7 @@ public class SubredditHistory extends RedditHistory {
 
             for (String subredditName: subredditSet)  {
                 Subreddit subreddit = reddit.getSubreddit(subredditName);
-                subreddit.getDescription();
+                //subreddit.getDescription();
 
                 subreddits.put(subredditName, subreddit);
             }

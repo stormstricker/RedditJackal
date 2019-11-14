@@ -3,6 +3,7 @@ package redditjackal.entities;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import redditjackal.exceptions.NotLoggedInException;
+import redditjackal.exceptions.RedditorNotFoundException;
 import redditjackal.requests.RedditRequest;
 
 import java.net.URLEncoder;
@@ -131,9 +132,16 @@ public abstract class Thing {
     Thing(Reddit reddit, JSONObject thingData) throws NotLoggedInException {
         this.reddit = reddit;
 
-        setAuthor(reddit.getRedditor((String) thingData.get("author")));
+        try  {
+            String username = (String) thingData.get("author");
+            setAuthor(reddit.getRedditor(username));
+        }
+        catch (RedditorNotFoundException e)  {
+            e.printStackTrace();
+        }
+
         setScore(((Integer) thingData.get("score")).longValue());
-        setSubreddit(new Subreddit(reddit, (String) thingData.get("subreddit")));
+        setSubreddit(reddit.getSubreddit((String) thingData.get("subreddit")));
         setId((String) thingData.get("name"));
         setLink("https://www.reddit.com" + thingData.get("permalink"));
 

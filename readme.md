@@ -1,7 +1,7 @@
 # How to use RedditJackal
 ## Getting comments
 ###### Of a user
-```
+```java
 Reddit reddit = new Reddit(username, password,
                     appId, appSecret);
 Redditor user = reddit.getRedditor("username");
@@ -16,13 +16,13 @@ for (Comment comment: comments)  {
 
 ## Getting posts
 ###### Of a user
-```
+```java
 Reddit reddit = new Reddit(username, password,
                     appId, appSecret);
 Redditor user = reddit.getRedditor("username");
 List<Post> posts = user.postHistory().update(10).getPosts();
 ```
-###### From aboutRedditorSubredditJson
+###### From subreddit
 ```java
 Reddit reddit = new Reddit(username, password,
                     appId, appSecret);
@@ -38,7 +38,7 @@ for (Post post: posts)  {
 }
 ```
 
-## Create a post in a aboutRedditorSubredditJson
+## Create a post in a subreddit
 ```java
 Reddit reddit = new Reddit(username, password,
                     appId, appSecret);

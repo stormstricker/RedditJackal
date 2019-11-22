@@ -23,14 +23,14 @@ Redditor user = reddit.getRedditor("username");
 List<Post> posts = user.postHistory().update(10).getPosts();
 ```
 ###### From aboutRedditorSubredditJson
-```
+```java
 Reddit reddit = new Reddit(username, password,
                     appId, appSecret);
-Subreddit aboutRedditorSubredditJson = reddit.getSubreddit("learnjava");
-System.out.println(aboutRedditorSubredditJson.getDescription());
+Subreddit learnjava = reddit.getSubreddit("learnjava");
+System.out.println(learnjava.getDescription());
 
-aboutRedditorSubredditJson.postHistory().update(3);
-List<Post> posts  = aboutRedditorSubredditJson.postHistory().getPosts();
+learnjava.postHistory().update(3);
+List<Post> posts  = learnjava.postHistory().getPosts();
 
 for (Post post: posts)  {
     System.out.println(post.getTitle());
@@ -39,17 +39,17 @@ for (Post post: posts)  {
 ```
 
 ## Create a post in a aboutRedditorSubredditJson
-```
+```java
 Reddit reddit = new Reddit(username, password,
                     appId, appSecret);
-Subreddit aboutRedditorSubredditJson = reddit.getSubreddit("news");
-aboutRedditorSubredditJson.post("News title", "self", "what happened");
+Subreddit news = reddit.getSubreddit("news");
+news.post("News title", "self", "what happened");
 ```
 
 ## Replying to posts or comments
-```
-Subreddit aboutRedditorSubredditJson = reddit.getSubreddit("math");
-List<Comment> comments = aboutRedditorSubredditJson.commentHistory().update(100).getComments();
+```java
+Subreddit math = reddit.getSubreddit("math");
+List<Comment> comments = math.commentHistory().update(100).getComments();
 for (Comment comment: comments)  {
     if (comment.getBody().contains("pi"))  {
         System.out.println(comment.getBody());
@@ -57,7 +57,7 @@ for (Comment comment: comments)  {
     }
 }
 
-List<Post> posts  = aboutRedditorSubredditJson.postHistory().update(100).getPosts();
+List<Post> posts  = math.postHistory().update(100).getPosts();
 for (Post post: posts)  {
     if (post.getTitle().contains("Java"))  {
         System.out.println(post.getTitle());
@@ -67,13 +67,13 @@ for (Post post: posts)  {
 ```
 
 ## Sending PMs to other users
-```
+```java
 BotOwner admin = reddit.getMe();
 admin.sendPrivateMessage("test message", "test body", "username");
 ```
 
 ## Viewing your inbox
-```
+```java
 BotOwner botOwner = reddit.getMe();
 List<InboxMessage> inbox = botOwner.getInboxMessages(5);   //max 100
 
@@ -83,7 +83,7 @@ for (InboxMessage message: inbox)  {
 ```
 
 ## Viewing unread messages in your inbox
-```
+```java
 BotOwner admin = reddit.getMe();
 List<InboxMessage> unread = admin.getUnreadInboxMessages();
 
@@ -93,7 +93,7 @@ for (InboxMessage message: unread)  {
 ```
 
 ## Mark an unread message as read
-```
+```java
 BotOwner admin = reddit.getMe();
 List<InboxMessage> unread = admin.getUnreadInboxMessages();
 System.out.println("unread size: " + unread.size());  //N
@@ -106,7 +106,7 @@ System.out.println("unread size: " + unread.size());  //0
 ```
 
 ## Get information about a user
-```
+```java
 Redditor redditor = reddit.getRedditor("username");
 System.out.println(redditor.getIsEmployee());
 System.out.println(redditor.getHasVerifiedEmail());

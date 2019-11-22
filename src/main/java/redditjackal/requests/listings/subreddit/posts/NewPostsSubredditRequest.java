@@ -4,13 +4,15 @@ import redditjackal.requests.AccessToken;
 import redditjackal.requests.listings.subreddit.AbstractSubredditListingRequest;
 
 public class NewPostsSubredditRequest extends AbstractSubredditPostsRequest {
-    protected NewPostsSubredditRequest(String subreddit)  {super(subreddit);}
+    protected NewPostsSubredditRequest(String subreddit)  {
+        super(subreddit);
+    }
 
     public static NewPostsSubredditRequest.Builder builder(String subreddit, AccessToken token)  {
         return new NewPostsSubredditRequest(subreddit).new Builder(token);
     }
 
-    public class Builder extends AbstractSubredditListingRequest.Builder<Builder> {
+    public class Builder extends AbstractSubredditPostsRequest.Builder<Builder> {
         protected Builder(AccessToken token)  {
             super("/new", token);
         }

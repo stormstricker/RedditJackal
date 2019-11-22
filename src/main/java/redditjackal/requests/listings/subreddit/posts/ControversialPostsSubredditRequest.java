@@ -11,7 +11,7 @@ public class ControversialPostsSubredditRequest extends AbstractTimeSubredditPos
         return new ControversialPostsSubredditRequest(subreddit).new Builder(token);
     }
 
-    public class Builder extends AbstractSubredditListingRequest.Builder<Builder> {
+    public class Builder extends AbstractTimeSubredditPostsRequest.Builder<Builder> {
         protected Builder(AccessToken token)  {
             super("/controversial", token);
         }

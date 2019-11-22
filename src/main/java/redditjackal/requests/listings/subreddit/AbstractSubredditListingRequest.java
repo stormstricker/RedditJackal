@@ -6,7 +6,9 @@ import redditjackal.requests.listings.AbstractListingRequest;
 public class AbstractSubredditListingRequest extends AbstractListingRequest {
     protected String subreddit;
 
-    protected AbstractSubredditListingRequest(String subreddit)  {this.subreddit = subreddit;}
+    protected AbstractSubredditListingRequest(String subreddit)  {
+        this.subreddit = subreddit;
+    }
 
     {
         setRequestType(REQUEST_TYPE.GET);
@@ -15,8 +17,8 @@ public class AbstractSubredditListingRequest extends AbstractListingRequest {
 
     public abstract class Builder<T extends Builder<T>>
                                     extends AbstractListingRequest.Builder<T> {
-        protected Builder(String subreddit, AccessToken token) {
-            super("/" + subreddit, token);
+        protected Builder(String type, AccessToken token) {
+            super("/" + subreddit  + type, token);
         }
 
     }

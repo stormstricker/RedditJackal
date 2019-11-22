@@ -15,7 +15,13 @@ public abstract class AbstractRedditorPostsRequest extends AbstractRedditorListi
         protected Builder(AccessToken token)  {
             super("/submitted", token);
         }
+
+        @Override
+        public abstract AbstractRedditorPostsRequest build();
+        @Override
+        protected  abstract T self();
     }
+
 
     @Override
     public PostsListingJson execute() {

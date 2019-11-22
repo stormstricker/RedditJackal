@@ -8,14 +8,19 @@ import redditjackal.requests.RedditResponse;
 import redditjackal.requests.listings.subreddit.AbstractSubredditListingRequest;
 
 public abstract class AbstractSubredditPostsRequest extends AbstractSubredditListingRequest {
-    protected AbstractSubredditPostsRequest(String subreddit)  {super(subreddit);}
+    protected AbstractSubredditPostsRequest(String subreddit)  {
+        super(subreddit);
+    }
 
     public abstract class Builder<T extends Builder<T>> extends AbstractSubredditListingRequest.Builder<T>  {
         protected Builder(String type, AccessToken token)  {
             super(type, token);
         }
 
-
+        @Override
+        public abstract AbstractSubredditPostsRequest build();
+        @Override
+        protected  abstract T self();
     }
 
     @Override

@@ -12,9 +12,7 @@ public class HotPostsSubredditRequest extends AbstractSubredditPostsRequest {
         return new HotPostsSubredditRequest(subreddit).new Builder(token);
     }
 
-
-
-    public class Builder extends AbstractSubredditListingRequest.Builder<Builder> {
+    public class Builder extends AbstractSubredditPostsRequest.Builder<Builder> {
         protected Builder(AccessToken token)  {
             super("/hot", token);
         }

@@ -1,9 +1,13 @@
 package redditjackal.history.subreddit;
 
 import redditjackal.entities.Actor;
+import redditjackal.entities.Post;
 import redditjackal.entities.Subreddit;
 import redditjackal.history.CommentHistory;
 import redditjackal.history.RedditHistory;
+import redditjackal.requests.listings.subreddit.AbstractSubredditListingRequest;
+
+import java.util.List;
 
 //TODO
 public class SubredditCommentHistory extends CommentHistory {
@@ -24,6 +28,11 @@ public class SubredditCommentHistory extends CommentHistory {
     public SubredditCommentHistory updateFrom(int size, String name) {return this;}
     @Override
     public SubredditCommentHistory updateTo(int size, String name)  {return this;}
+
+    public SubredditCommentHistory updateRecursive(int left, String after, List<Post> results,
+                                               AbstractSubredditListingRequest.Builder<? extends AbstractSubredditListingRequest.Builder<?>> builder)  {
+        return null;
+    }
 
     @Override
     public RedditHistory updateNew(int size) {

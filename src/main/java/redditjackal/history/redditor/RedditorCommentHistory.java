@@ -34,7 +34,6 @@ public class RedditorCommentHistory extends CommentHistory {
     @Override
     public RedditorCommentHistory updateTo(int size, String name)  {return this;}
 
-    //FastFood2.Builder<? extends FastFood2.Builder<?>>
     public RedditorCommentHistory updateRecursive(int left, String after, List<Comment> results,
                     AbstractRedditorCommentsRequest.Builder<? extends AbstractRedditorCommentsRequest.Builder<?>> builder)  {
         AbstractRedditorCommentsRequest request;
@@ -70,60 +69,29 @@ public class RedditorCommentHistory extends CommentHistory {
     @Override
     public RedditHistory updateHot(int size) {
         hotComments = new LinkedList<>();
-        HotCommentsRedditorRequest request = HotCommentsRedditorRequest.builder(redditor.getName(),
-                redditor.getReddit().getAccessToken()).setLimit(size).build();
-
-        RedditorCommentsJson comments = request.execute();
-        for (RedditorCommentsChildJson comment: comments.getData().getChildren())  {
-            hotComments.add(new Comment(redditor, comment.getData()));
-        }
-
-        return this;
+        return updateRecursive(size, "",
+                hotComments, HotCommentsRedditorRequest.builder(redditor.getName(), redditor.getReddit().getAccessToken()));
     }
 
     @Override
     public RedditHistory updateTop(int size) {
         topComments = new LinkedList<>();
-
-        TopCommentsRedditorRequest request = TopCommentsRedditorRequest.builder(redditor.getName(),
-                redditor.getReddit().getAccessToken()).setLimit(size).build();
-
-        RedditorCommentsJson comments = request.execute();
-        for (RedditorCommentsChildJson comment: comments.getData().getChildren())  {
-            topComments.add(new Comment(redditor, comment.getData()));
-        }
-
-        return this;
+        return updateRecursive(size, "",
+                topComments, TopCommentsRedditorRequest.builder(redditor.getName(), redditor.getReddit().getAccessToken()));
     }
 
     @Override
     public RedditHistory updateRising(int size) {
         risingComments = new LinkedList<>();
-
-        RisingCommentsRedditorRequest request = RisingCommentsRedditorRequest.builder(redditor.getName(),
-                redditor.getReddit().getAccessToken()).setLimit(size).build();
-
-        RedditorCommentsJson comments = request.execute();
-        for (RedditorCommentsChildJson comment: comments.getData().getChildren())  {
-            risingComments.add(new Comment(redditor, comment.getData()));
-        }
-
-        return this;
+        return updateRecursive(size, "",
+                risingComments, RisingCommentsRedditorRequest.builder(redditor.getName(), redditor.getReddit().getAccessToken()));
     }
 
     @Override
     public RedditHistory updateControversial(int size) {
         controversialComments = new LinkedList<>();
-
-        ControversialCommentsRedditorRequest request = ControversialCommentsRedditorRequest.builder(redditor.getName(),
-                redditor.getReddit().getAccessToken()).setLimit(size).build();
-
-        RedditorCommentsJson comments = request.execute();
-        for (RedditorCommentsChildJson comment: comments.getData().getChildren())  {
-            controversialComments.add(new Comment(redditor, comment.getData()));
-        }
-
-        return this;
+        return updateRecursive(size, "",
+                controversialComments, ControversialCommentsRedditorRequest.builder(redditor.getName(), redditor.getReddit().getAccessToken()));
     }
 }
 

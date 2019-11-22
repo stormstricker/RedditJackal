@@ -9,6 +9,7 @@ import redditjackal.jsonhandlers.listings.subreddit.PostsListingJson;
 import redditjackal.requests.listings.redditor.posts.*;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class RedditorPostHistory extends PostHistory {
     private Redditor redditor = (Redditor) actor;
@@ -28,6 +29,32 @@ public class RedditorPostHistory extends PostHistory {
     public RedditorPostHistory updateFrom(int size, String name) {return this;}
     @Override
     public RedditorPostHistory updateTo(int size, String name)  {return this;}
+
+    public RedditorPostHistory updateRecursive(int left, String after, List<Post> results,
+                                                  AbstractRedditorPostsRequest.Builder<? extends AbstractRedditorPostsRequest.Builder<?>> builder)  {
+        AbstractRedditorPostsRequest request;
+        if (left<=100)  {
+            request= builder.setLimit(left).setAfter(after).build();
+
+            PostsListingJson comments = request.execute();
+            for (PostsListingChildJson comment: comments.getData().getChildren())  {
+                results.add(new Post(redditor, comment.getData()));
+            }
+
+            return this;
+        }
+        else  {
+            request = builder.setLimit(100).setAfter(after).build();
+            PostsListingJson comments = request.execute();
+            for (PostsListingChildJson comment: comments.getData().getChildren())  {
+                results.add(new Post(redditor, comment.getData()));
+            }
+
+            return updateRecursive(left-100, results.get(results.size()-1).getAfter(),
+                    results, builder);
+        }
+    }
+
 
     @Override
     public PostHistory updateNew(int size)  {

@@ -9,7 +9,7 @@ public abstract class AbstractTimeSubredditPostsRequest extends AbstractSubreddi
     protected AbstractTimeSubredditPostsRequest(String subreddit)  {super(subreddit);}
 
 
-    public abstract class Builder<T extends Builder<T>> extends AbstractSubredditListingRequest.Builder<T>  {
+    public abstract class Builder<T extends Builder<T>> extends AbstractSubredditPostsRequest.Builder<T>  {
         protected Builder(String type, AccessToken token)  {
             super(type, token);
         }
@@ -17,7 +17,7 @@ public abstract class AbstractTimeSubredditPostsRequest extends AbstractSubreddi
         public AbstractTimeSubredditPostsRequest.Builder setT(String t) {
             AbstractTimeSubredditPostsRequest.this.t = t;
             params +="&t=" + t;
-            return (T) self();
+            return self();
         }
     }
 }

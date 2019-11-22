@@ -12,7 +12,7 @@ for (Comment comment: comments)  {
 }
 ```
 ###### From a post
-```to be done```
+```//TODO```
 
 ## Getting posts
 ###### Of a user

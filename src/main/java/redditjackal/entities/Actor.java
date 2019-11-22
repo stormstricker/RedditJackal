@@ -1,5 +1,8 @@
 package redditjackal.entities;
 
+import redditjackal.history.CommentHistory;
+import redditjackal.history.PostHistory;
+
 public abstract class Actor {
         protected Reddit reddit;
         public abstract String getName();

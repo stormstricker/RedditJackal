@@ -1,12 +1,16 @@
 package redditjackal.entities;
 
+import redditjackal.history.CommentHistory;
+import redditjackal.history.PostHistory;
+import redditjackal.history.subreddit.SubredditCommentHistory;
+import redditjackal.history.subreddit.SubredditPostHistory;
 import redditjackal.requests.RedditRequest;
 import org.json.JSONObject;
 import redditjackal.requests.inbox.interfaces.Mailable;
 
 public class Subreddit extends Actor implements Mailable {
-    private CommentHistory commentHistory;
-    private PostHistory postHistory;
+    private SubredditCommentHistory commentHistory;
+    private SubredditPostHistory postHistory;
 
     private String description;
     private String link;
@@ -16,13 +20,15 @@ public class Subreddit extends Actor implements Mailable {
         this.reddit = reddit;
         this.name = name;
 
-        this.commentHistory = new CommentHistory(this);
-        this.postHistory = new PostHistory(this);
+        this.commentHistory = new SubredditCommentHistory(this);
+        this.postHistory = new SubredditPostHistory(this);
         this.description = getDescription();
     }
 
-    public CommentHistory commentHistory()  {return commentHistory;}
-    public PostHistory postHistory()  {return postHistory;}
+    @Override
+    public SubredditCommentHistory commentHistory()  {return commentHistory;}
+    @Override
+    public SubredditPostHistory postHistory()  {return postHistory;}
 
     public void post(String title, String kind, String text) throws Exception  {
         String url = "https://oauth.reddit.com/api/submit?sr=" + name + "&title=" + title + "&kind=self&text=" + text;
@@ -31,7 +37,6 @@ public class Subreddit extends Actor implements Mailable {
         String inputString = request.send().getResponse();
         System.out.println(inputString);
     }
-
 
     @Override
     public void sendPrivateMessage(String subject, String text)  {

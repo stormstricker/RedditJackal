@@ -13,21 +13,25 @@ import java.time.temporal.ChronoUnit;
 public abstract class Thing {
     public static enum THING_TYPE {COMMENT, POST};
     protected Reddit reddit;
-
-    protected Redditor author;
     protected Subreddit subreddit;
-    protected String body;
-    protected long score;
-    protected String link;
+    protected Redditor author;
 
     protected Time time;
     protected String authorFlair="";
 
-    protected String id;
-
-    Thing()  {
-
+    public Thing(Redditor author)  {
+        this.reddit = author.getReddit();
+        this.author = author;
     }
+
+    public Thing(Subreddit subreddit)  {
+        this.subreddit = subreddit;
+        this.reddit = subreddit.getReddit();
+    }
+
+
+
+    public abstract String getName();
 
     public class Time  {
         private long seconds;
@@ -129,40 +133,8 @@ public abstract class Thing {
         }
     }
 
-    Thing(Reddit reddit, JSONObject thingData) throws NotLoggedInException {
-        this.reddit = reddit;
-
-        try  {
-            String username = (String) thingData.get("author");
-            setAuthor(reddit.getRedditor(username));
-        }
-        catch (RedditorNotFoundException e)  {
-            e.printStackTrace();
-        }
-
-        setScore(((Integer) thingData.get("score")).longValue());
-        setSubreddit(reddit.getSubreddit((String) thingData.get("subreddit")));
-        setId((String) thingData.get("name"));
-        setLink("https://www.reddit.com" + thingData.get("permalink"));
-
-        try  {
-            double jsonTime = (double) thingData.get("created_utc");
-            setTime(new Time(jsonTime));
-        }
-        catch (Exception e)  {
-            e.printStackTrace();
-        }
-
-        try {
-            setAuthorFlair((String) thingData.get("author_flair_text"));
-        }
-        catch (Exception e) {
-           // e.printStackTrace();
-        }
-    }
-
-    public Comment reply(String text) throws Exception  {
-        String link = "https://oauth.reddit.com/api/comment?api_type=json&thing_id=" + id + "&text=" + URLEncoder.encode(text, "utf-8");
+    public void reply(String text) throws Exception  {
+        String link = "https://oauth.reddit.com/api/comment?api_type=json&thing_id="  + getName()  +"&text=" + URLEncoder.encode(text, "utf-8");
         RedditRequest request = new RedditRequest(link, reddit.getAccessToken(), RedditRequest.REQUEST_TYPE.POST);
         String response = request.send().getResponse();
         System.out.println(response);
@@ -170,8 +142,8 @@ public abstract class Thing {
         JSONObject jsonArray = new JSONObject(response);
         JSONArray things = (JSONArray) ((JSONObject) ((JSONObject) jsonArray.get("json")).get("data")).get("things");
 
-        Comment result = new Comment(reddit, (JSONObject) ((JSONObject) things.get(0)).get("data"));
-        return result;
+        /*Comment result = new Comment(reddit, (JSONObject) ((JSONObject) things.get(0)).get("data"));
+        return result;*/
     }
 
     //setters
@@ -181,30 +153,11 @@ public abstract class Thing {
     public void setReddit(Reddit reddit) {
         this.reddit = reddit;
     }
-    public void setLink(String link)  {this.link = link;}
-    public void setId(String id)  {this.id = id; }
-    public void setAuthorFlair(String authorFlair)  {
-        this.authorFlair = authorFlair;
-    }
-    public void setAuthor(Redditor author)  {
-        this.author = author;
-    }
-    public void setSubreddit(Subreddit subreddit)  {
-        this.subreddit = subreddit;
-    }
-    public void setBody(String body)  {
-        this.body = body;
-    }
-    public void setScore(long score)  {
-        this.score = score;
-    }
+    public void setAuthor(Redditor author)  {this.author = author;}
 
     //getters
     public Reddit getReddit() {
         return reddit;
-    }
-    public String getBody()  {
-        return body;
     }
     public Subreddit getSubreddit()  {
         return subreddit;
@@ -212,22 +165,15 @@ public abstract class Thing {
     public Redditor getAuthor()  {
         return author;
     }
-    public long getScore()  {
-        return score;
-    }
-    public String getLink()  {return link;}
-    public String getAuthorFlair()  {
-        return authorFlair;
-    }
-    public String getId()  {
-        return id;
-    }
-    public String toString()  {
-        return subreddit + "=> " + score + "=>" + author + ": " + body;
-    }
+
     public Time getTime() {
         return time;
     }
+/*
+    public String toString()  {
+        return subreddit + "=> " + score + "=>" + author + ": " + body;
+    }*/
+
 
 }
 

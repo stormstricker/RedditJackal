@@ -1,6 +1,10 @@
 package redditjackal.entities;
 
 import redditjackal.exceptions.RedditorNotFoundException;
+import redditjackal.history.CommentHistory;
+import redditjackal.history.PostHistory;
+import redditjackal.history.redditor.RedditorCommentHistory;
+import redditjackal.history.redditor.RedditorPostHistory;
 import redditjackal.jsonhandlers.redditor.AboutRedditorDataJson;
 import redditjackal.jsonhandlers.redditor.AboutRedditorJson;
 import redditjackal.jsonhandlers.redditor.AboutRedditorSubredditJson;
@@ -15,9 +19,9 @@ import java.util.HashMap;
 public class Redditor extends Actor implements Mailable {
     AboutRedditorJson aboutJson;
 
-    CommentHistory commentHistory;
-    PostHistory postHistory;
-    SubredditHistory subredditHistory;
+    RedditorCommentHistory commentHistory;
+    RedditorPostHistory postHistory;
+    //SubredditHistory subredditHistory;
 
     private String link;
 
@@ -25,6 +29,11 @@ public class Redditor extends Actor implements Mailable {
     private long reputation;
     //date
 
+    //from Actor
+    @Override
+    public RedditorCommentHistory commentHistory()  {return commentHistory;}
+    @Override
+    public RedditorPostHistory postHistory()  {return postHistory;}
 
     private HashMap<String, String> flairs;
 
@@ -104,8 +113,6 @@ public class Redditor extends Actor implements Mailable {
 
 
     //getters
-    public CommentHistory commentHistory()  {return commentHistory;}
-    public SubredditHistory subredditHistory()  {return subredditHistory;}
     public ArrayList<String> getInterests()  {
         return interests;
     }
@@ -114,9 +121,6 @@ public class Redditor extends Actor implements Mailable {
     }
     public HashMap<String, String> getFlairs()  {
         return flairs;
-    }
-    public PostHistory postHistory()  {
-        return postHistory;
     }
     public String getName()  {
         return username;
@@ -160,11 +164,11 @@ public class Redditor extends Actor implements Mailable {
 
         if (commentHistory.size()!=0)  {
             for (Comment comment: commentHistory.getComments())  {
-                if (!comment.getAuthorFlair().equals("") && !flairs.containsKey(comment.getAuthorFlair()))  {
+               /* if (!comment.getAuthorFlair().equals("") && !flairs.containsKey(comment.getAuthorFlair()))  {
                     flairs.put(comment.getAuthorFlair(), comment.getSubreddit().getName());
 
                     result = true;
-                }
+                }*/
             }
         }
 
@@ -180,15 +184,15 @@ public class Redditor extends Actor implements Mailable {
          AboutRedditorRequest request = builder.build();
          this.aboutJson = request.execute();
 
-        this.commentHistory = new CommentHistory(this);
-        this.postHistory = new PostHistory(this);
+        this.commentHistory = new RedditorCommentHistory(this);
+        this.postHistory = new RedditorPostHistory(this);
 
-        try  {
+       /* try  {
             this.subredditHistory = new SubredditHistory(this, commentHistory, postHistory);
         }
         catch (Exception e)  {
             System.out.println(("something went wrong"));
-        }
+        }*/
 
         flairs = new HashMap<>();
 

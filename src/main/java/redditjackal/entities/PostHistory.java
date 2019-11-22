@@ -1,3 +1,4 @@
+/*
 package redditjackal.entities;
 
 import java.util.LinkedHashMap;
@@ -39,7 +40,7 @@ public class PostHistory extends RedditHistory  {
 
         posts = new LinkedList(posts.subList(posts.size()- Math.min(total, posts.size()), posts.size()));
 
-        System.out.println("new comments: ");
+        System.out.println("newlisting comments: ");
         for (Post comment: posts)  {
             System.out.println(comment);
         }
@@ -83,7 +84,7 @@ public class PostHistory extends RedditHistory  {
     }
 
     public PostHistory updateNew(int total) throws Exception  {
-        posts = (LinkedList<Post>) updateThings(total, "", "", "new");
+        posts = (LinkedList<Post>) updateThings(total, "", "", "newlisting");
 
         calculateFrequencies();
 
@@ -124,3 +125,4 @@ public class PostHistory extends RedditHistory  {
     //getters
     public LinkedList<Post> getPosts()  {return posts;}
 }
+*/

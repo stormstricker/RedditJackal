@@ -11,3 +11,4 @@ webapp
 credentials
 *.credentials
 WEB-INF
+resources

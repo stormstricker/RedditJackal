@@ -1,11 +1,12 @@
 package redditjackal.requests.inbox.get;
 
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import redditjackal.jsonhandlers.inbox.InboxResultJson;
+import redditjackal.requests.AbstractRequest;
 import redditjackal.requests.AccessToken;
 import redditjackal.requests.RedditResponse;
-import redditjackal.requests.AbstractRequest;
 
 public abstract class AbstractGetInboxRequest extends AbstractRequest {
     protected boolean mark;
@@ -28,7 +29,7 @@ public abstract class AbstractGetInboxRequest extends AbstractRequest {
         return null;
     }
 
-    public abstract class Builder<T extends Builder> extends AbstractRequest.Builder<Builder>  {
+    public abstract class Builder<T extends Builder<T>> extends AbstractRequest.Builder<T>  {
         protected Builder(String type, AccessToken token)  {
             super(type, token);
         }
@@ -82,7 +83,6 @@ public abstract class AbstractGetInboxRequest extends AbstractRequest {
         }
     }
 
-    //auto-gen
     @Override
     public InboxResultJson execute()  {
         try  {

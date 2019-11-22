@@ -28,7 +28,7 @@ public class RedditRequest {
         private URL url;
         private REQUEST_TYPE requestType;
 
-        private AccessToken accessToken;  //if there has already been retrieved an access_token
+    protected AccessToken accessToken;  //if there has already been retrieved an access_token
         private String encodedAppPair = "";  //if it's a REQUEST_TYPE.ACCESS_TOKEN request
 
         protected String link = "";
@@ -101,9 +101,18 @@ public class RedditRequest {
                      } else if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
                          input = connection.getInputStream();
                      }
-                     else  {
+                     else  if (connection.getResponseCode()==HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        accessToken.renew();
+                         System.out.println("Had to renew #1");
+                         connection = (HttpURLConnection) url.openConnection();
+                         setup();
+
+                         return this.send();
+                     }
+                     else{
                          input = connection.getErrorStream();
                      }
+
 
                      //System.out.println("timeout: " + connection.getConnectTimeout());
                      //System.out.println("end get input stream");
@@ -155,10 +164,10 @@ public class RedditRequest {
 
 
                 // Request parameters and other properties.
-              //  List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-               // params.add(new BasicNameValuePair("param-1", "12345"));
-               // params.add(new BasicNameValuePair("param-2", "Hello!"));
-              //  request.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+              //  List<NameValuePair> params = newlisting ArrayList<NameValuePair>(2);
+               // params.add(newlisting BasicNameValuePair("param-1", "12345"));
+               // params.add(newlisting BasicNameValuePair("param-2", "Hello!"));
+              //  request.setEntity(newlisting UrlEncodedFormEntity(params, "UTF-8"));
 
                 //Execute and get the response.
                 HttpResponse response = httpclient.execute(request);
@@ -237,7 +246,7 @@ public class RedditRequest {
        // }
     }
 
-    public Object execute() throws Exception {
+    public Object execute() throws Exception{
         return null;
     }
 

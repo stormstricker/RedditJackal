@@ -1,3 +1,4 @@
+/*
 package redditjackal.entities;
 
 import redditjackal.exceptions.ThingNotFoundException;
@@ -82,7 +83,7 @@ public class CommentHistory extends RedditHistory {
 
         comments = new LinkedList(comments.subList(comments.size()- Math.min(total, comments.size()), comments.size()));
 
-        System.out.println("new comments: ");
+        System.out.println("newlisting comments: ");
         for (Comment comment: comments)  {
             System.out.println(comment);
         }
@@ -161,3 +162,4 @@ public class CommentHistory extends RedditHistory {
 
     }
 }
+*/

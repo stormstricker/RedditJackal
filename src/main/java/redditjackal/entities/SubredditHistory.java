@@ -1,3 +1,4 @@
+/*
 package redditjackal.entities;
 
 import redditjackal.exceptions.NotLoggedInException;
@@ -158,3 +159,4 @@ public class SubredditHistory extends RedditHistory {
             return newPosts;
         }
 }
+*/

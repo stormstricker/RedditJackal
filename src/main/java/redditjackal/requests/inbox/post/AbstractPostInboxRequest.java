@@ -14,7 +14,7 @@ public class AbstractPostInboxRequest extends AbstractGetInboxRequest {
 
     protected AbstractPostInboxRequest() {}
 
-    public abstract class Builder<T extends Builder> extends AbstractRequest.Builder<Builder> {
+    public abstract class Builder<T extends Builder<T>> extends AbstractRequest.Builder<T> {
         protected Builder(String type, AccessToken token) {
             super(type, token);
         }

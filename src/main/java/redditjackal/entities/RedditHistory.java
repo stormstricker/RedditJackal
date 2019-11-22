@@ -1,3 +1,4 @@
+/*
 package redditjackal.entities;
 
 import redditjackal.requests.RedditRequest;
@@ -35,26 +36,18 @@ public abstract class RedditHistory {
 
     public abstract void clear();
 
-   // public void updateThings(String type) throws Exception  {
-   //     updateThings(size(), type);
-   // }
-
-
-   // public LinkedList<? extends Thing> updateThings(String type, String firstId, String lastId) throws Exception  {
-   //     return updateThings(1000, type, "", lastId);  //would load entities until lastId is met
-   // }
 
 
     //oauth.reddit.com/user/username/submitted?limit=10
     //oauth.reddit.com/user/username/comments?limit=10
-    //oauth.reddit.com/r/subreddit/comments?limit=10 (always new comments)
-    //oauth.reddit.com/r/subreddit/new?limit=10
+    //oauth.reddit.com/r/subreddit/comments?limit=10 (always newlisting comments)
+    //oauth.reddit.com/r/subreddit/newlisting?limit=10
     //oauth.reddit.com/r/subreddit/hot?limit=10
     public LinkedList<? extends Thing> updateThings(int total, String firstId, String lastId) throws Exception {
         return updateThings(total, firstId, lastId, "hot");
     }
 
-    public LinkedList<? extends Thing> updateThings(int total, String firstId, String lastId, String thingSort) throws Exception  {
+        public LinkedList<? extends Thing> updateThings(int total, String firstId, String lastId, String thingSort) throws Exception  {
         System.out.println("type: " + type);
 
         LinkedList<Thing> result = new LinkedList<>();
@@ -198,3 +191,4 @@ public abstract class RedditHistory {
     }
 }
 
+*/

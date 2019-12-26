@@ -21,5 +21,7 @@ public class AbstractSubredditListingRequest extends AbstractListingRequest {
             super("/" + subreddit  + type, token);
         }
 
+        @Override
+        protected abstract T builder();
     }
 }

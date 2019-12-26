@@ -1,8 +1,6 @@
 package redditjackal.entities;
 
 import redditjackal.exceptions.RedditorNotFoundException;
-import redditjackal.history.CommentHistory;
-import redditjackal.history.PostHistory;
 import redditjackal.history.redditor.RedditorCommentHistory;
 import redditjackal.history.redditor.RedditorPostHistory;
 import redditjackal.jsonhandlers.redditor.AboutRedditorDataJson;
@@ -13,6 +11,7 @@ import redditjackal.requests.redditor.AboutRedditorRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 //TODO: check if user is deleted
 
@@ -50,13 +49,84 @@ public class Redditor extends Actor implements Mailable {
         reddit.getMe().sendPrivateMessage(subject, text, username, fr_sr);
     }
 
+
+
+    private AboutRedditorSubredditJson getAboutRedditorSubredditJson() {
+        return getAboutRedditorDataJson().getAboutRedditorSubredditJson();
+    }
+
+    //autogen from subreddit
+    public String getBannerImg() {
+        return getAboutRedditorSubredditJson().getBannerImg();
+    }
+
+    public Object getBannerSize() {
+        return getAboutRedditorSubredditJson().getBannerSize();
+    }
+
+    public String getCommunityIcon() {
+        return getAboutRedditorSubredditJson().getCommunityIcon();
+    }
+
+    public Boolean getDefaultSet() {
+        return getAboutRedditorSubredditJson().getDefaultSet();
+    }
+
+    public String getDescription() {
+        System.out.println();
+        return getAboutRedditorSubredditJson().getDescription();
+    }
+
+    public Boolean getDisableContributorRequests() {
+        return getAboutRedditorSubredditJson().getDisableContributorRequests();
+    }
+
+    public String getDisplayName() {
+        return getAboutRedditorSubredditJson().getDisplayName();
+    }
+
+    public String getDisplayNamePrefixed() {
+        return getAboutRedditorSubredditJson().getDisplayNamePrefixed();
+    }
+
+    public Boolean getFreeFormReports() {
+        return getAboutRedditorSubredditJson().getFreeFormReports();
+    }
+
+    public Object getHeaderImg() {
+        return getAboutRedditorSubredditJson().getHeaderImg();
+    }
+
+    public Object getHeaderSize() {
+        return getAboutRedditorSubredditJson().getHeaderSize();
+    }
+
+    public String getIconColor() {
+        return getAboutRedditorSubredditJson().getIconColor();
+    }
+
     //autogen delegates
-    public AboutRedditorDataJson getAboutRedditorDataJson() {
-        return aboutJson.getAboutRedditorDataJson();
+    private AboutRedditorDataJson getAboutRedditorDataJson() {
+        return getAboutJson().getAboutRedditorDataJson();
+    }
+
+    private AboutRedditorJson getAboutJson() {
+        if (aboutJson==null)  {
+            AboutRedditorRequest.Builder builder = AboutRedditorRequest.builder(username, reddit.getAccessToken());
+            AboutRedditorRequest request = builder.build();
+            try  {
+                this.aboutJson = request.execute();
+            }
+            catch (RedditorNotFoundException e)  {
+                e.printStackTrace();
+            }
+        }
+
+        return aboutJson;
     }
 
     public String getKind() {
-        return aboutJson.getKind();
+        return getAboutJson().getKind();
     }
 
     public Long getCommentKarma() {
@@ -85,6 +155,30 @@ public class Redditor extends Actor implements Mailable {
 
     public String getIconImg() {
         return getAboutRedditorDataJson().getIconImg();
+    }
+
+    public List<Long> getIconSize() {
+        return getAboutRedditorSubredditJson().getIconSize();
+    }
+
+    public Boolean getIsDefaultBanner() {
+        return getAboutRedditorSubredditJson().getIsDefaultBanner();
+    }
+
+    public Boolean getIsDefaultIcon() {
+        return getAboutRedditorSubredditJson().getIsDefaultIcon();
+    }
+
+    public String getKeyColor() {
+        return getAboutRedditorSubredditJson().getKeyColor();
+    }
+
+    public Boolean getLinkFlairEnabled() {
+        return getAboutRedditorSubredditJson().getLinkFlairEnabled();
+    }
+
+    public String getLinkFlairPosition() {
+        return getAboutRedditorSubredditJson().getLinkFlairPosition();
     }
 
     public String getId() {
@@ -126,12 +220,76 @@ public class Redditor extends Actor implements Mailable {
         return username;
     }
 
-    public Boolean getPrefShowSnoovatar() {
-        return getAboutRedditorDataJson().getPrefShowSnoovatar();
+    public Boolean getOver18() {
+        return getAboutRedditorSubredditJson().getOver18();
     }
 
-    public AboutRedditorSubredditJson getAboutRedditorSubredditJson() {
-        return getAboutRedditorDataJson().getAboutRedditorSubredditJson();
+    public String getPrimaryColor() {
+        return getAboutRedditorSubredditJson().getPrimaryColor();
+    }
+
+    public String getPublicDescription() {
+        return getAboutRedditorSubredditJson().getPublicDescription();
+    }
+
+    public Boolean getRestrictCommenting() {
+        return getAboutRedditorSubredditJson().getRestrictCommenting();
+    }
+
+    public Boolean getRestrictPosting() {
+        return getAboutRedditorSubredditJson().getRestrictPosting();
+    }
+
+    public Boolean getShowMedia() {
+        return getAboutRedditorSubredditJson().getShowMedia();
+    }
+
+    public String getSubmitLinkLabel() {
+        return getAboutRedditorSubredditJson().getSubmitLinkLabel();
+    }
+
+    public String getSubmitTextLabel() {
+        return getAboutRedditorSubredditJson().getSubmitTextLabel();
+    }
+
+    public String getSubredditType() {
+        return getAboutRedditorSubredditJson().getSubredditType();
+    }
+
+    public Long getSubscribers() {
+        return getAboutRedditorSubredditJson().getSubscribers();
+    }
+
+    public String getTitle() {
+        return getAboutRedditorSubredditJson().getTitle();
+    }
+
+    public String getUrl() {
+        return getAboutRedditorSubredditJson().getUrl();
+    }
+
+    public Boolean getUserIsBanned() {
+        return getAboutRedditorSubredditJson().getUserIsBanned();
+    }
+
+    public Boolean getUserIsContributor() {
+        return getAboutRedditorSubredditJson().getUserIsContributor();
+    }
+
+    public Boolean getUserIsModerator() {
+        return getAboutRedditorSubredditJson().getUserIsModerator();
+    }
+
+    public Boolean getUserIsMuted() {
+        return getAboutRedditorSubredditJson().getUserIsMuted();
+    }
+
+    public Boolean getUserIsSubscriber() {
+        return getAboutRedditorSubredditJson().getUserIsSubscriber();
+    }
+
+    public Boolean getPrefShowSnoovatar() {
+        return getAboutRedditorDataJson().getPrefShowSnoovatar();
     }
 
     public Boolean getVerified() {
@@ -179,11 +337,6 @@ public class Redditor extends Actor implements Mailable {
     //constructors
      Redditor(Reddit reddit, String username) throws RedditorNotFoundException  {
         this.reddit = reddit;
-
-         AboutRedditorRequest.Builder builder = AboutRedditorRequest.builder(username, reddit.getAccessToken());
-         AboutRedditorRequest request = builder.build();
-         this.aboutJson = request.execute();
-
         this.commentHistory = new RedditorCommentHistory(this);
         this.postHistory = new RedditorPostHistory(this);
 

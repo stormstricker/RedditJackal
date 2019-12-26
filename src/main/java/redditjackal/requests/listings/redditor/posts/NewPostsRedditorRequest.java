@@ -25,5 +25,9 @@ public class NewPostsRedditorRequest extends AbstractRedditorPostsRequest{
         public NewPostsRedditorRequest.Builder self()  {
             return this;
         }
+        @Override
+        public NewPostsRedditorRequest.Builder builder()  {
+            return NewPostsRedditorRequest.builder(username, accessToken);
+        }
     }
 }

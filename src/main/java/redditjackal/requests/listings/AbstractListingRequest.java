@@ -31,6 +31,9 @@ public abstract class AbstractListingRequest extends AbstractRequest {
         protected abstract AbstractListingRequest build();
         @Override
         protected abstract T self();
+        @Override
+        protected abstract T builder();
+
 
         public T setAfter(String after) {
             AbstractListingRequest.this.after = after;

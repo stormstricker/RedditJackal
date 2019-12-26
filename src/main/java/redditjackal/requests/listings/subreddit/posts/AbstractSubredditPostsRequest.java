@@ -21,6 +21,8 @@ public abstract class AbstractSubredditPostsRequest extends AbstractSubredditLis
         public abstract AbstractSubredditPostsRequest build();
         @Override
         protected  abstract T self();
+        @Override
+        public abstract T builder();
     }
 
     @Override

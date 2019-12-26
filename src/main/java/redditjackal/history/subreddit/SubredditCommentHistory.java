@@ -35,6 +35,27 @@ public class SubredditCommentHistory extends CommentHistory {
     }
 
     @Override
+    public SubredditCommentHistory updateNew()  {
+        return (SubredditCommentHistory) super.updateNew();
+    }
+    @Override
+    public SubredditCommentHistory updateHot()  {
+        return (SubredditCommentHistory) super.updateHot();
+    }
+    @Override
+    public SubredditCommentHistory updateTop()  {
+        return (SubredditCommentHistory) super.updateTop();
+    }
+    @Override
+    public SubredditCommentHistory updateRising()  {
+        return (SubredditCommentHistory) super.updateRising();
+    }
+    @Override
+    public SubredditCommentHistory updateControversial()  {
+        return (SubredditCommentHistory) super.updateControversial();
+    }
+
+    @Override
     public RedditHistory updateNew(int size) {
         return null;
     }

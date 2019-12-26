@@ -15,6 +15,7 @@ public class ComposeMessageRequest extends AbstractPostInboxRequest {
 
     {
         params += "&api_type=" + api_type;
+        paramsMap.put("api_type", api_type);
     }
 
 
@@ -26,12 +27,16 @@ public class ComposeMessageRequest extends AbstractPostInboxRequest {
         try  {
             params += "&subject=" + URLEncoder.encode(subject, "UTF-8");
             params += "&text=" + URLEncoder.encode(text, "UTF-8");
+
+            paramsMap.put("subject", subject);
+            paramsMap.put("text", text);
         }
         catch (Exception e)  {
             e.printStackTrace();
         }
 
         params += "&to=" + to;
+        paramsMap.put("to", to);
     }
 
 
@@ -47,24 +52,30 @@ public class ComposeMessageRequest extends AbstractPostInboxRequest {
         public Builder setModhash(String modhash)  {
             ComposeMessageRequest.this.modhash = modhash;
             params += "&modhash=" + modhash;
+            paramsMap.put("modhash", modhash);
             return this;
         }
 
         public Builder setFromSr(String from_sr)  {
             ComposeMessageRequest.this.from_sr = from_sr;
             params += "&from_sr" + from_sr;
+            paramsMap.put("from_sr", from_sr);
             return this;
         }
 
         @Override
         public ComposeMessageRequest build()  {
-            updateLink();
             return ComposeMessageRequest.this;
         }
 
         @Override
         public ComposeMessageRequest.Builder self()  {
             return this;
+        }
+
+        @Override
+        public Builder builder()  {
+            return ComposeMessageRequest.builder(subject, text, to, accessToken);
         }
     }
 

@@ -2,12 +2,13 @@ package redditjackal.entities;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import redditjackal.exceptions.NotLoggedInException;
-import redditjackal.exceptions.RedditorNotFoundException;
 import redditjackal.requests.RedditRequest;
 
 import java.net.URLEncoder;
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 
 public abstract class Thing {

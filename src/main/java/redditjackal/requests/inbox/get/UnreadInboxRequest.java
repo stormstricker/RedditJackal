@@ -24,5 +24,10 @@ public class UnreadInboxRequest extends AbstractGetInboxRequest {
         public Builder self()  {
             return this;
         }
+
+        @Override
+        public Builder builder()  {
+            return UnreadInboxRequest.builder(accessToken);
+        }
     }
 }

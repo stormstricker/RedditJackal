@@ -2,13 +2,10 @@ package redditjackal.requests;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 
-import javax.xml.crypto.dsig.spec.ExcC14NParameterSpec;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,7 +13,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.StringJoiner;
 import java.util.zip.GZIPInputStream;
 
 public class RedditRequest {
@@ -33,6 +33,7 @@ public class RedditRequest {
 
         protected String link = "";
         protected String params = "";
+        protected Map<String, String> paramsMap = new HashMap<>();
 
         protected void updateLink()  {
             if (!params.equalsIgnoreCase(""))  {
@@ -121,7 +122,7 @@ public class RedditRequest {
                      String inputString = new Scanner(input, "UTF-8").useDelimiter("\\Z").next();
                      //System.out.println("End scanner");
 
-                     System.out.println("inputString: " + inputString);
+                     //System.out.println("inputString: " + inputString);
                      input.close();
                      // connection.disconnect();
 
@@ -221,11 +222,19 @@ public class RedditRequest {
             connection.setUseCaches( false );
             connection.setDoInput(true);
 
-            byte[] postData = URLEncoder.encode(params, "UTF-8").getBytes( StandardCharsets.UTF_8 );
-            int postDataLength = postData.length;
-            connection.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+
+            StringJoiner sj = new StringJoiner("&");
+            for(Map.Entry<String,String> entry : paramsMap.entrySet())
+                sj.add(URLEncoder.encode(entry.getKey(), "UTF-8") + "="
+                        + URLEncoder.encode(entry.getValue(), "UTF-8"));
+
+            byte[] postData = sj.toString().getBytes(StandardCharsets.UTF_8);
+
+            //connection.setFixedLengthStreamingMode(postData.length);
+            connection.setRequestProperty("Content-Length", Integer.toString(postData.length));
             OutputStream os = connection.getOutputStream();
             os.write(postData);
+            os.flush();
             os.close();
         }
 

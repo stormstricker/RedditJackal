@@ -25,6 +25,10 @@ public class RisingPostsRedditorRequest extends AbstractRedditorPostsRequest {
         public RisingPostsRedditorRequest.Builder self()  {
             return this;
         }
+        @Override
+        public RisingPostsRedditorRequest.Builder builder()  {
+            return RisingPostsRedditorRequest.builder(username, accessToken);
+        }
     }
 }
 

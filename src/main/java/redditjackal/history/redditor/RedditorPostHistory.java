@@ -4,7 +4,6 @@ import redditjackal.entities.Post;
 import redditjackal.entities.Redditor;
 import redditjackal.history.PostHistory;
 import redditjackal.jsonhandlers.listings.subreddit.PostsListingChildJson;
-import redditjackal.jsonhandlers.listings.subreddit.PostsListingDataJson;
 import redditjackal.jsonhandlers.listings.subreddit.PostsListingJson;
 import redditjackal.requests.listings.redditor.posts.*;
 
@@ -33,6 +32,7 @@ public class RedditorPostHistory extends PostHistory {
     public RedditorPostHistory updateRecursive(int left, String after, List<Post> results,
                                                   AbstractRedditorPostsRequest.Builder<? extends AbstractRedditorPostsRequest.Builder<?>> builder)  {
         AbstractRedditorPostsRequest request;
+        builder = builder.builder();
         if (left<=100)  {
             request= builder.setLimit(left).setAfter(after).build();
 
@@ -50,84 +50,66 @@ public class RedditorPostHistory extends PostHistory {
                 results.add(new Post(redditor, comment.getData()));
             }
 
-            return updateRecursive(left-100, results.get(results.size()-1).getAfter(),
+            return updateRecursive(left-100, results.get(results.size()-1).getName(),
                     results, builder);
         }
     }
-
+    @Override
+    public RedditorPostHistory updateNew()  {
+        return (RedditorPostHistory) super.updateNew();
+    }
+    @Override
+    public RedditorPostHistory updateHot()  {
+        return (RedditorPostHistory) super.updateHot();
+    }
+    @Override
+    public RedditorPostHistory updateTop()  {
+        return (RedditorPostHistory) super.updateTop();
+    }
+    @Override
+    public RedditorPostHistory updateRising()  {
+        return (RedditorPostHistory) super.updateRising();
+    }
+    @Override
+    public RedditorPostHistory updateControversial()  {
+        return (RedditorPostHistory) super.updateControversial();
+    }
 
     @Override
-    public PostHistory updateNew(int size)  {
+    public RedditorPostHistory updateNew(int size)  {
         newPosts = new LinkedList<>();
-
-        NewPostsRedditorRequest newRequest = NewPostsRedditorRequest.builder(redditor.getName(),
-                redditor.getReddit().getAccessToken()).setLimit(size).build();
-
-        PostsListingJson posts = newRequest.execute();
-        for (PostsListingChildJson postChild: posts.getData().getChildren())  {
-            newPosts.add(new Post(redditor, postChild.getData()));
-        }
-
-        return this;
+        return updateRecursive(size, "",
+                newPosts, NewPostsRedditorRequest.builder(redditor.getName(), redditor.getReddit().getAccessToken()));
     }
 
     @Override
-    public PostHistory updateHot(int size)  {
+    public RedditorPostHistory updateHot(int size)  {
         hotPosts = new LinkedList<>();
-
-        HotPostsRedditorRequest hotRequest = HotPostsRedditorRequest.builder(redditor.getName(),
-                redditor.getReddit().getAccessToken()).setLimit(size).build();
-
-        PostsListingJson posts = hotRequest.execute();
-        for (PostsListingChildJson post: posts.getData().getChildren())  {
-            hotPosts.add(new Post(redditor, post.getData()));
-        }
-
-        return this;
+        return updateRecursive(size, "",
+                hotPosts, HotPostsRedditorRequest.builder(redditor.getName(), redditor.getReddit().getAccessToken()));
     }
 
     @Override
-    public PostHistory updateTop(int size)  {
+    public RedditorPostHistory updateTop(int size)  {
         topPosts = new LinkedList<>();
+        return updateRecursive(size, "",
+                topPosts, TopPostsRedditorRequest.builder(redditor.getName(), redditor.getReddit().getAccessToken()));
 
-        TopPostsRedditorRequest topRequest = TopPostsRedditorRequest.builder(redditor.getName(),
-                redditor.getReddit().getAccessToken()).setLimit(size).build();
-
-        PostsListingJson posts = topRequest.execute();
-        for (PostsListingChildJson post: posts.getData().getChildren())  {
-            topPosts.add(new Post(redditor, post.getData()));
-        }
-
-        return this;
     }
 
     @Override
-    public PostHistory updateRising(int size)  {
+    public RedditorPostHistory updateRising(int size)  {
         risingPosts = new LinkedList<>();
+        return updateRecursive(size, "",
+                risingPosts, RisingPostsRedditorRequest.builder(redditor.getName(), redditor.getReddit().getAccessToken()));
 
-        RisingPostsRedditorRequest risingRequest = RisingPostsRedditorRequest.builder(redditor.getName(),
-                redditor.getReddit().getAccessToken()).setLimit(size).build();
-
-        PostsListingJson posts = risingRequest.execute();
-        for (PostsListingChildJson post: posts.getData().getChildren())  {
-            risingPosts.add(new Post(redditor, post.getData()));
-        }
-
-        return this;
     }
 
     @Override
-    public PostHistory updateControversial(int size)  {
+    public RedditorPostHistory updateControversial(int size)  {
         controversialPosts = new LinkedList<>();
+        return updateRecursive(size, "",
+                controversialPosts, ControversialPostsRedditorRequest.builder(redditor.getName(), redditor.getReddit().getAccessToken()));
 
-        ControversialPostsRedditorRequest controRequest = ControversialPostsRedditorRequest.builder(redditor.getName(),
-                redditor.getReddit().getAccessToken()).setLimit(size).build();
-
-        PostsListingJson posts = controRequest.execute();
-        for (PostsListingChildJson post: posts.getData().getChildren())  {
-            controversialPosts.add(new Post(redditor, post.getData()));
-        }
-
-        return this;
     }
 }

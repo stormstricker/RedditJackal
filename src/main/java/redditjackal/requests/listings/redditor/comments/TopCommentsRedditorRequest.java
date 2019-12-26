@@ -25,6 +25,11 @@ public class TopCommentsRedditorRequest extends AbstractRedditorCommentsRequest 
         public TopCommentsRedditorRequest.Builder self()  {
             return this;
         }
+
+        @Override
+        public TopCommentsRedditorRequest.Builder builder()  {
+            return TopCommentsRedditorRequest.builder(username, accessToken);
+        }
     }
 }
 

@@ -1,9 +1,6 @@
 package redditjackal.history;
 
 import redditjackal.entities.Actor;
-import redditjackal.entities.Redditor;
-import redditjackal.entities.Thing;
-import redditjackal.requests.AbstractRequest;
 import redditjackal.utils.JackalUtils;
 
 public abstract class RedditHistory {
@@ -18,7 +15,6 @@ public abstract class RedditHistory {
     public RedditHistory updateNew()  {
         return updateNew(1000);
     }
-
     public RedditHistory updateHot()  {
         return updateHot(1000);
     }

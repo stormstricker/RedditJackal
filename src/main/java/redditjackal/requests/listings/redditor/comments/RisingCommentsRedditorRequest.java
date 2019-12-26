@@ -25,6 +25,11 @@ public class RisingCommentsRedditorRequest extends AbstractRedditorCommentsReque
         public RisingCommentsRedditorRequest.Builder self()  {
             return this;
         }
+
+        @Override
+        public RisingCommentsRedditorRequest.Builder builder()  {
+            return RisingCommentsRedditorRequest.builder(username, accessToken);
+        }
     }
 }
 

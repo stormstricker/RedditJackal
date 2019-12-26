@@ -25,6 +25,11 @@ public class ControversialCommentsRedditorRequest extends AbstractRedditorCommen
         public ControversialCommentsRedditorRequest.Builder self()  {
             return this;
         }
+        @Override
+        public ControversialCommentsRedditorRequest.Builder builder()  {
+            return ControversialCommentsRedditorRequest.builder(username, accessToken);
+        }
+
     }
 }
 

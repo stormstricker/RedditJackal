@@ -25,6 +25,10 @@ public class HotCommentsRedditorRequest extends AbstractRedditorCommentsRequest 
         public HotCommentsRedditorRequest.Builder self()  {
             return this;
         }
+        @Override
+        public HotCommentsRedditorRequest.Builder builder()  {
+            return HotCommentsRedditorRequest.builder(username, accessToken);
+        }
     }
 }
 

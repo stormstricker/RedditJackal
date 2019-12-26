@@ -14,6 +14,9 @@ public abstract class AbstractTimeSubredditPostsRequest extends AbstractSubreddi
             super(type, token);
         }
 
+        @Override
+        public abstract T builder();
+
         public AbstractTimeSubredditPostsRequest.Builder setT(String t) {
             AbstractTimeSubredditPostsRequest.this.t = t;
             params +="&t=" + t;

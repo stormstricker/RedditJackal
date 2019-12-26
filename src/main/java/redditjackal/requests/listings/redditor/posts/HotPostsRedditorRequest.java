@@ -25,6 +25,10 @@ public class HotPostsRedditorRequest extends AbstractRedditorPostsRequest {
         public HotPostsRedditorRequest.Builder self()  {
             return this;
         }
+        @Override
+        public HotPostsRedditorRequest.Builder builder()  {
+            return HotPostsRedditorRequest.builder(username, accessToken);
+        }
     }
 }
 

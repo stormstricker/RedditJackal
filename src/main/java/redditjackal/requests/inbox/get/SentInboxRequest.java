@@ -24,5 +24,10 @@ public class SentInboxRequest extends AbstractGetInboxRequest {
         public SentInboxRequest.Builder self()  {
             return this;
         }
+
+        @Override
+        public Builder builder()  {
+            return SentInboxRequest.builder(accessToken);
+        }
     }
 }

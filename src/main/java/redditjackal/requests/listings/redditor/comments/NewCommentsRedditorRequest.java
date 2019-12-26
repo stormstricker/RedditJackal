@@ -25,5 +25,10 @@ public class NewCommentsRedditorRequest extends AbstractRedditorCommentsRequest 
         public NewCommentsRedditorRequest.Builder self()  {
             return this;
         }
+
+        @Override
+        public NewCommentsRedditorRequest.Builder builder()  {
+            return NewCommentsRedditorRequest.builder(username, accessToken);
+        }
     }
 }

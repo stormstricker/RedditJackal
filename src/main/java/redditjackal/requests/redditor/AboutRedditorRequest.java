@@ -2,13 +2,10 @@ package redditjackal.requests.redditor;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import redditjackal.entities.Reddit;
 import redditjackal.exceptions.RedditorNotFoundException;
-import redditjackal.jsonhandlers.inbox.InboxResultJson;
 import redditjackal.jsonhandlers.redditor.AboutRedditorJson;
 import redditjackal.requests.AbstractRequest;
 import redditjackal.requests.AccessToken;
-import redditjackal.requests.RedditRequest;
 import redditjackal.requests.RedditResponse;
 
 public class AboutRedditorRequest extends AbstractRequest  {
@@ -42,6 +39,9 @@ public class AboutRedditorRequest extends AbstractRequest  {
         public AboutRedditorRequest.Builder self()  {
             return this;
         }
+
+        @Override
+        public AboutRedditorRequest.Builder builder()  {return AboutRedditorRequest.builder(username, accessToken);}
     }
 
     @Override

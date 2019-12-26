@@ -6,7 +6,7 @@
     <groupId>redditjackal</groupId>
     <artifactId>redditjackal</artifactId>
     <packaging>jar</packaging>
-    <version>10.1-SNAPSHOT</version>
+    <version>12.1-SNAPSHOT</version>
     <name>RedditJackal</name>
     <url>https://redditjackal.com</url>
 
@@ -21,6 +21,12 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>22.0</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>

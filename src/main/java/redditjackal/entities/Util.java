@@ -1,6 +1,9 @@
 package redditjackal.entities;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Util {
     public static void main(String[] args) {

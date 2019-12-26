@@ -1,7 +1,6 @@
 package redditjackal.requests.listings.subreddit.posts;
 
 import redditjackal.requests.AccessToken;
-import redditjackal.requests.listings.subreddit.AbstractSubredditListingRequest;
 
 public class NewPostsSubredditRequest extends AbstractSubredditPostsRequest {
     protected NewPostsSubredditRequest(String subreddit)  {
@@ -26,6 +25,10 @@ public class NewPostsSubredditRequest extends AbstractSubredditPostsRequest {
         @Override
         public NewPostsSubredditRequest.Builder self()  {
             return this;
+        }
+        @Override
+        public NewPostsSubredditRequest.Builder builder()  {
+            return NewPostsSubredditRequest.builder(subreddit, accessToken);
         }
     }
 }

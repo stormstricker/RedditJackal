@@ -2,7 +2,6 @@ package redditjackal.requests.things.subreddit;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import redditjackal.jsonhandlers.things.subreddit.AboutSubredditJson;
 import redditjackal.jsonhandlers.things.subreddit.SubredditRulesJson;
 import redditjackal.requests.AbstractRequest;
 import redditjackal.requests.AccessToken;
@@ -20,8 +19,8 @@ public class SubredditRulesRequest extends AbstractRequest {
         this.subreddit = subreddit;
     }
 
-    public static SubredditRulesRequest.Builder builder(String username, AccessToken token)  {
-        return new SubredditRulesRequest(username).new Builder(token);
+    public static SubredditRulesRequest.Builder builder(String subreddit, AccessToken token)  {
+        return new SubredditRulesRequest(subreddit).new Builder(token);
     }
 
     public class Builder extends AbstractRequest.Builder<SubredditRulesRequest.Builder>  {
@@ -38,6 +37,11 @@ public class SubredditRulesRequest extends AbstractRequest {
         @Override
         public SubredditRulesRequest.Builder self()  {
             return this;
+        }
+
+        @Override
+        public SubredditRulesRequest.Builder builder()  {
+            return SubredditRulesRequest.builder(subreddit, accessToken);
         }
     }
 

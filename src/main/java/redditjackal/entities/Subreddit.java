@@ -1,11 +1,9 @@
 package redditjackal.entities;
 
-import redditjackal.history.CommentHistory;
-import redditjackal.history.PostHistory;
+import org.json.JSONObject;
 import redditjackal.history.subreddit.SubredditCommentHistory;
 import redditjackal.history.subreddit.SubredditPostHistory;
 import redditjackal.requests.RedditRequest;
-import org.json.JSONObject;
 import redditjackal.requests.inbox.interfaces.Mailable;
 
 public class Subreddit extends Actor implements Mailable {
@@ -22,13 +20,20 @@ public class Subreddit extends Actor implements Mailable {
 
         this.commentHistory = new SubredditCommentHistory(this);
         this.postHistory = new SubredditPostHistory(this);
-        this.description = getDescription();
     }
 
     @Override
     public SubredditCommentHistory commentHistory()  {return commentHistory;}
     @Override
     public SubredditPostHistory postHistory()  {return postHistory;}
+
+    public void submitSelfText(String title, String text) throws Exception  {
+        String url = "https://oauth.reddit.com/api/submit?sr=" + name + "&title=" + title + "&kind=self&text=" + text;
+
+        RedditRequest request = new RedditRequest(url, reddit.getAccessToken(), RedditRequest.REQUEST_TYPE.POST);
+        String inputString = request.send().getResponse();
+        System.out.println(inputString);
+    }
 
     public void post(String title, String kind, String text) throws Exception  {
         String url = "https://oauth.reddit.com/api/submit?sr=" + name + "&title=" + title + "&kind=self&text=" + text;

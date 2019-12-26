@@ -5,7 +5,6 @@ import redditjackal.entities.Subreddit;
 import redditjackal.history.PostHistory;
 import redditjackal.jsonhandlers.listings.subreddit.PostsListingChildJson;
 import redditjackal.jsonhandlers.listings.subreddit.PostsListingJson;
-import redditjackal.requests.listings.redditor.comments.RisingCommentsRedditorRequest;
 import redditjackal.requests.listings.subreddit.posts.*;
 
 import java.util.LinkedList;
@@ -30,9 +29,32 @@ public class SubredditPostHistory extends PostHistory {
     @Override
     public SubredditPostHistory update(int size)  {return (SubredditPostHistory) super.update(size);}
 
+    @Override
+    public SubredditPostHistory updateNew()  {
+        return (SubredditPostHistory) super.updateNew();
+    }
+    @Override
+    public SubredditPostHistory updateHot()  {
+        return (SubredditPostHistory) super.updateHot();
+    }
+    @Override
+    public SubredditPostHistory updateTop()  {
+        return (SubredditPostHistory) super.updateTop();
+    }
+    @Override
+    public SubredditPostHistory updateRising()  {
+        return (SubredditPostHistory) super.updateRising();
+    }
+    @Override
+    public SubredditPostHistory updateControversial()  {
+        return (SubredditPostHistory) super.updateControversial();
+    }
+
+
     public SubredditPostHistory updateRecursive(int left, String after, List<Post> results,
                                                AbstractSubredditPostsRequest.Builder<? extends AbstractSubredditPostsRequest.Builder<?>> builder)  {
         AbstractSubredditPostsRequest request;
+        builder = builder.builder();
         if (left<=100)  {
             request= builder.setLimit(left).setAfter(after).build();
 
@@ -50,7 +72,7 @@ public class SubredditPostHistory extends PostHistory {
                 results.add(new Post(subreddit, comment.getData()));
             }
 
-            return updateRecursive(left-100, results.get(results.size()-1).getAfter(),
+            return updateRecursive(left-100, results.get(results.size()-1).getName(),
                     results, builder);
         }
     }

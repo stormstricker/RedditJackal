@@ -1,7 +1,6 @@
 package redditjackal.requests.listings.subreddit.posts;
 
 import redditjackal.requests.AccessToken;
-import redditjackal.requests.listings.subreddit.AbstractSubredditListingRequest;
 
 public class HotPostsSubredditRequest extends AbstractSubredditPostsRequest {
     protected String g;
@@ -32,6 +31,10 @@ public class HotPostsSubredditRequest extends AbstractSubredditPostsRequest {
         @Override
         public HotPostsSubredditRequest.Builder self()  {
             return this;
+        }
+        @Override
+        public HotPostsSubredditRequest.Builder builder()  {
+            return HotPostsSubredditRequest.builder(subreddit, accessToken);
         }
     }
 }

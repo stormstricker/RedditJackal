@@ -1,9 +1,10 @@
 
 package redditjackal.jsonhandlers.redditor;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import javax.annotation.Generated;
 
 @Generated("net.hexar.json2pojo")
 @SuppressWarnings("unused")
@@ -38,7 +39,7 @@ public class AboutRedditorDataJson {
     private String name;
     @SerializedName("pref_show_snoovatar")
     private Boolean prefShowSnoovatar;
-    @Expose
+    @SerializedName("subreddit")
     private AboutRedditorSubredditJson aboutRedditorSubredditJson;
     @Expose
     private Boolean verified;

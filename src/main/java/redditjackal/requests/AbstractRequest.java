@@ -12,5 +12,6 @@ public class AbstractRequest extends RedditRequest {
 
         protected abstract AbstractRequest build();
         protected abstract T self();
+        protected abstract T builder();
     }
 }

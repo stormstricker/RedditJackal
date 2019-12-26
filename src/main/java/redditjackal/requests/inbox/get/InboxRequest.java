@@ -24,5 +24,10 @@ public class InboxRequest extends AbstractGetInboxRequest {
         public Builder self()  {
             return this;
         }
+
+        @Override
+        public Builder builder()  {
+            return InboxRequest.builder(accessToken);
+        }
     }
 }

@@ -20,6 +20,8 @@ public abstract class AbstractRedditorPostsRequest extends AbstractRedditorListi
         public abstract AbstractRedditorPostsRequest build();
         @Override
         protected  abstract T self();
+        @Override
+        public abstract T builder();
     }
 
 
@@ -35,4 +37,6 @@ public abstract class AbstractRedditorPostsRequest extends AbstractRedditorListi
             return null;
         }
     }
+
+
 }

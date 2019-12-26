@@ -1,7 +1,6 @@
 package redditjackal.requests.listings.subreddit.posts;
 
 import redditjackal.requests.AccessToken;
-import redditjackal.requests.listings.subreddit.AbstractSubredditListingRequest;
 
 public class TopPostsSubredditRequest extends AbstractSubredditPostsRequest {
     protected TopPostsSubredditRequest(String subreddit)  {super(subreddit);}
@@ -24,6 +23,10 @@ public class TopPostsSubredditRequest extends AbstractSubredditPostsRequest {
         @Override
         public TopPostsSubredditRequest.Builder self()  {
             return this;
+        }
+        @Override
+        public TopPostsSubredditRequest.Builder builder()  {
+            return TopPostsSubredditRequest.builder(subreddit, accessToken);
         }
     }
 }

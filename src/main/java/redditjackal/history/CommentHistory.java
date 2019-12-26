@@ -2,7 +2,6 @@ package redditjackal.history;
 
 import redditjackal.entities.Actor;
 import redditjackal.entities.Comment;
-import redditjackal.requests.Link;
 
 import java.util.LinkedList;
 

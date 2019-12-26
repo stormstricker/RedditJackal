@@ -19,8 +19,8 @@ public class AboutSubredditRequest extends AbstractRequest {
         this.subreddit = subreddit;
     }
 
-    public static AboutSubredditRequest.Builder builder(String username, AccessToken token)  {
-        return new AboutSubredditRequest(username).new Builder(token);
+    public static AboutSubredditRequest.Builder builder(String subreddit, AccessToken token)  {
+        return new AboutSubredditRequest(subreddit).new Builder(token);
     }
 
     public class Builder extends AbstractRequest.Builder<AboutSubredditRequest.Builder>  {
@@ -37,6 +37,11 @@ public class AboutSubredditRequest extends AbstractRequest {
         @Override
         public AboutSubredditRequest.Builder self()  {
             return this;
+        }
+
+        @Override
+        public AboutSubredditRequest.Builder builder()  {
+            return AboutSubredditRequest.builder(subreddit, accessToken);
         }
     }
 

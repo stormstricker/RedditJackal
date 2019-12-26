@@ -21,6 +21,8 @@ public abstract class AbstractRedditorCommentsRequest
         public abstract AbstractRedditorCommentsRequest build();
         @Override
         protected  abstract T self();
+        @Override
+        public abstract T builder();
     }
 
 

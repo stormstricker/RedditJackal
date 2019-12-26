@@ -1,14 +1,16 @@
 
 package redditjackal.jsonhandlers.listings.redditor;
 
-import java.util.List;
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import redditjackal.jsonhandlers.AbstractCommentDataJson;
+
+import javax.annotation.Generated;
+import java.util.List;
 
 @Generated("net.hexar.json2pojo")
 @SuppressWarnings("unused")
-public class RedditorCommentsDataJson {
+public class RedditorCommentsDataJson extends AbstractCommentDataJson {
 
     @Expose
     private String after;

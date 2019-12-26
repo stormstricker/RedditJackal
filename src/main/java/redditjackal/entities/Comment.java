@@ -23,6 +23,14 @@ public class Comment extends Thing {
                 return "https://www.reddit.com" + getPermalink();
         }
 
+        public Comment getParentComment()  {
+                return reddit.getCommentById(getParentId());
+        }
+
+        public Post getParentPost()  {
+                return reddit.getPostById(getParentId());
+        }
+
         //AUTOGEN
         public String getAfter() {
                 return dataJson.getAfter();

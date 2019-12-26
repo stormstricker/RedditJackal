@@ -1,6 +1,5 @@
 package redditjackal.requests.listings.redditor;
 
-import redditjackal.requests.AbstractRequest;
 import redditjackal.requests.AccessToken;
 import redditjackal.requests.listings.AbstractListingRequest;
 
@@ -28,7 +27,9 @@ public   class AbstractRedditorListingRequest extends AbstractListingRequest {
         @Override
         protected abstract T self();
         @Override
-        protected abstract AbstractRedditorListingRequest build();
+        protected abstract T builder();
+        @Override
+        public abstract AbstractRedditorListingRequest build();
 
         //public abstract AbstractRedditorListingRequest build();
 

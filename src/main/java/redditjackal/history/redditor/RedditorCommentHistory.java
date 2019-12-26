@@ -2,14 +2,10 @@ package redditjackal.history.redditor;
 
 import redditjackal.entities.Comment;
 import redditjackal.entities.Redditor;
-import redditjackal.entities.Thing;
 import redditjackal.history.CommentHistory;
 import redditjackal.history.RedditHistory;
 import redditjackal.jsonhandlers.listings.redditor.RedditorCommentsChildJson;
-import redditjackal.jsonhandlers.listings.redditor.RedditorCommentsDataJson;
 import redditjackal.jsonhandlers.listings.redditor.RedditorCommentsJson;
-import redditjackal.jsonhandlers.listings.subreddit.PostsListingChildJson;
-import redditjackal.requests.AbstractRequest;
 import redditjackal.requests.listings.redditor.comments.*;
 
 import java.util.LinkedList;
@@ -34,9 +30,30 @@ public class RedditorCommentHistory extends CommentHistory {
     @Override
     public RedditorCommentHistory updateTo(int size, String name)  {return this;}
 
+    public RedditorCommentHistory updateNew()  {
+        return (RedditorCommentHistory) super.updateNew();
+    }
+    @Override
+    public RedditorCommentHistory updateHot()  {
+        return (RedditorCommentHistory) super.updateHot();
+    }
+    @Override
+    public RedditorCommentHistory updateTop()  {
+        return (RedditorCommentHistory) super.updateTop();
+    }
+    @Override
+    public RedditorCommentHistory updateRising()  {
+        return (RedditorCommentHistory) super.updateRising();
+    }
+    @Override
+    public RedditorCommentHistory updateControversial()  {
+        return (RedditorCommentHistory) super.updateControversial();
+    }
+
     public RedditorCommentHistory updateRecursive(int left, String after, List<Comment> results,
                     AbstractRedditorCommentsRequest.Builder<? extends AbstractRedditorCommentsRequest.Builder<?>> builder)  {
         AbstractRedditorCommentsRequest request;
+        builder = builder.builder();
         if (left<=100)  {
             request= builder.setLimit(left).setAfter(after).build();
 
@@ -54,7 +71,7 @@ public class RedditorCommentHistory extends CommentHistory {
                 results.add(new Comment(redditor, comment.getData()));
             }
 
-            return updateRecursive(left-100, results.get(results.size()-1).getAfter(),
+            return updateRecursive(left-100, results.get(results.size()-1).getName(),
                     results, builder);
         }
     }

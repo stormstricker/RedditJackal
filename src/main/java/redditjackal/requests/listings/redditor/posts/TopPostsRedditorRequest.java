@@ -25,5 +25,9 @@ public class TopPostsRedditorRequest extends AbstractRedditorPostsRequest{
         public TopPostsRedditorRequest.Builder self()  {
             return this;
         }
+        @Override
+        public TopPostsRedditorRequest.Builder builder()  {
+            return TopPostsRedditorRequest.builder(username, accessToken);
+        }
     }
 }

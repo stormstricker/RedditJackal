@@ -1,7 +1,6 @@
 package redditjackal.requests.listings.subreddit.posts;
 
 import redditjackal.requests.AccessToken;
-import redditjackal.requests.listings.subreddit.AbstractSubredditListingRequest;
 import redditjackal.requests.listings.subreddit.AbstractTimeSubredditPostsRequest;
 
 public class ControversialPostsSubredditRequest extends AbstractTimeSubredditPostsRequest {
@@ -26,6 +25,11 @@ public class ControversialPostsSubredditRequest extends AbstractTimeSubredditPos
         public ControversialPostsSubredditRequest.Builder self()  {
             return this;
         }
+        @Override
+        public ControversialPostsSubredditRequest.Builder builder()  {
+            return ControversialPostsSubredditRequest.builder(subreddit, accessToken);
+        }
+
     }
 }
 

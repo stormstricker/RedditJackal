@@ -31,7 +31,7 @@ Reddit reddit = new Reddit(username, password,
 Subreddit learnjava = reddit.getSubreddit("learnjava");
 System.out.println(learnjava.getDescription());
 
-learnjava.postHistory().update(3);
+learnjava.postHistory().updateNew(3);
 List<Post> posts  = learnjava.postHistory().getPosts();
 
 for (Post post: posts)  {

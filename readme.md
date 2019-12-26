@@ -5,9 +5,10 @@
 Reddit reddit = new Reddit(username, password,
                     appId, appSecret);
 Redditor user = reddit.getRedditor("username");
-List<Comment> comments = user.commentHistory().update(10).getComments();
+List<Comment> newComments = user.commentHistory().updateNew().getComments();
+List<Comment> hotComments = user.commentHistory().updateHot().getComments();
 
-for (Comment comment: comments)  {
+for (Comment comment: newComments)  {
     System.out.println(comment.getBody());
 }
 ```
@@ -20,7 +21,8 @@ for (Comment comment: comments)  {
 Reddit reddit = new Reddit(username, password,
                     appId, appSecret);
 Redditor user = reddit.getRedditor("username");
-List<Post> posts = user.postHistory().update(10).getPosts();
+List<Post> newPosts = user.postHistory().updateNew(10).getPosts();
+List<Post> hotPosts = user.postHistory().updateHot(10).getPosts();
 ```
 ###### From subreddit
 ```java
@@ -49,15 +51,16 @@ news.post("News title", "self", "what happened");
 ## Replying to posts or comments
 ```java
 Subreddit math = reddit.getSubreddit("math");
-List<Comment> comments = math.commentHistory().update(100).getComments();
+//TODO
+List<Comment> comments = math.commentHistory().updateNew(100).getComments();
 for (Comment comment: comments)  {
     if (comment.getBody().contains("pi"))  {
         System.out.println(comment.getBody());
         comment.reply("Pi is 3.14159");
     }
 }
-
-List<Post> posts  = math.postHistory().update(100).getPosts();
+//this is already implemented
+List<Post> posts  = math.postHistory().updateNew(100).getPosts();
 for (Post post: posts)  {
     if (post.getTitle().contains("Java"))  {
         System.out.println(post.getTitle());
@@ -70,6 +73,9 @@ for (Post post: posts)  {
 ```java
 BotOwner admin = reddit.getMe();
 admin.sendPrivateMessage("test message", "test body", "username");
+
+Redditor otherUser = reddit.getRedditor("username");
+otherUser.sendPrivateMessage("title", "body");
 ```
 
 ## Viewing your inbox

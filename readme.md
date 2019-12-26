@@ -32,7 +32,7 @@ Subreddit learnjava = reddit.getSubreddit("learnjava");
 System.out.println(learnjava.getDescription());
 
 learnjava.postHistory().updateNew(3);
-//by default retrieves newPosts
+//by default retrieves new posts
 List<Post> posts  = learnjava.postHistory().getPosts();
 
 for (Post post: posts)  {
